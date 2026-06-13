@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/embargo.json",
+  "title": "Embargo",
+  "type": "object",
+  "properties": {
+    "embargoEndDate": {
+      "format": "date",
+      "description": "The end date of the embargo, after which the dataset will become public.",
+      "type": "string"
+    }
+  }
+}

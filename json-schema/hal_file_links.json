@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/hal_file_links.json",
+  "title": "Hal File Links",
+  "properties": {
+    "stash:dataset": {
+      "$ref": "#/components/schemas/hal_link"
+    },
+    "stash:version": {
+      "$ref": "#/components/schemas/hal_link"
+    },
+    "stash:files": {
+      "$ref": "#/components/schemas/hal_link"
+    },
+    "stash:download": {
+      "$ref": "#/components/schemas/hal_link"
+    },
+    "curies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/hal_curie"
+      }
+    }
+  }
+}

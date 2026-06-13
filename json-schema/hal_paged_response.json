@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/hal_paged_response.json",
+  "title": "Hal Paged Response",
+  "allOf": [
+    {
+      "properties": {
+        "_links": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/hal_self_link"
+            },
+            {
+              "$ref": "#/components/schemas/hal_page_links"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$ref": "#/components/schemas/paging_counts"
+    }
+  ]
+}

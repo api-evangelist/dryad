@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/funder.json",
+  "title": "Funder",
+  "properties": {
+    "organization": {
+      "type": "string"
+    },
+    "identifier": {
+      "type": "string",
+      "description": "The organization identifier, for example a ROR ID.",
+      "example": "https://ror.org/00x6h5n95"
+    },
+    "identifierType": {
+      "description": "Type of identifier \u2014 ror, isni, grid, crossref_funder_id or other.",
+      "type": "string",
+      "example": "ror"
+    },
+    "awardNumber": {
+      "type": "string"
+    },
+    "awardDescription": {
+      "description": "Usually used for the program or the division of the award.",
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

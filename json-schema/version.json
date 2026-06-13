@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/version.json",
+  "title": "Version",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/version_links"
+    },
+    {
+      "$ref": "#/components/schemas/dc_metadata"
+    },
+    {
+      "properties": {
+        "versionNumber": {
+          "type": "integer"
+        },
+        "versionStatus": {
+          "type": "string",
+          "enum": [
+            "in_progress",
+            "processing",
+            "submitted"
+          ],
+          "description": "Internal processing status of files."
+        },
+        "curationStatus": {
+          "type": "string",
+          "enum": [
+            "In progress",
+            "Processing",
+            "Queued for curation",
+            "Private for Peer Review",
+            "Awaiting payment",
+            "Curation",
+            "Action required",
+            "Withdrawn",
+            "Embargoed",
+            "Published"
+          ],
+          "description": "Status of the submission in the curation workflow."
+        },
+        "versionChanges": {
+          "type": "string",
+          "enum": [
+            "files_changed",
+            "metadata_changed"
+          ]
+        },
+        "publicationDate": {
+          "type": "string"
+        },
+        "lastModificationDate": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "string",
+          "description": "Whether or not this version is publicly visible."
+        }
+      }
+    }
+  ]
+}

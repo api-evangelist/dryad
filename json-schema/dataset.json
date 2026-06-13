@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/dataset.json",
+  "title": "Dataset",
+  "allOf": [
+    {
+      "properties": {
+        "identifier": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "storageSize": {
+          "type": "integer"
+        },
+        "relatedPublicationISSN": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "$ref": "#/components/schemas/version"
+    },
+    {
+      "$ref": "#/components/schemas/dataset_links"
+    },
+    {
+      "properties": {
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "views": {
+              "type": "integer"
+            },
+            "downloads": {
+              "type": "integer"
+            },
+            "citations": {
+              "type": "integer"
+            }
+          }
+        },
+        "license": {
+          "type": "string",
+          "description": "The license of the dataset"
+        }
+      }
+    }
+  ]
+}

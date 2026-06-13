@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/hal_self_link.json",
+  "title": "Hal Self Link",
+  "type": "object",
+  "properties": {
+    "self": {
+      "$ref": "#/components/schemas/hal_link"
+    }
+  }
+}

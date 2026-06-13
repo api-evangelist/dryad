@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/related_type.json",
+  "title": "Related Type",
+  "type": "object",
+  "properties": {
+    "work_type": {
+      "format": "string",
+      "enum": [
+        "article",
+        "dataset",
+        "preprint",
+        "software",
+        "supplemental_information",
+        "primary_article",
+        "data_management_plan"
+      ],
+      "example": "article"
+    }
+  }
+}

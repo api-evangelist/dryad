@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/processor_result.json",
+  "title": "Processor Result",
+  "allOf": [
+    {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 27
+        },
+        "resource_id": {
+          "type": "integer",
+          "example": 48
+        },
+        "processing_type": {
+          "type": "string",
+          "enum": [
+            "excel_to_csv",
+            "compressed_info",
+            "frictionless"
+          ],
+          "example": "excel_to_csv"
+        },
+        "parent_id": {
+          "type": "integer",
+          "example": 747
+        },
+        "completion_state": {
+          "type": "string",
+          "enum": [
+            "not_started",
+            "processing",
+            "success",
+            "error"
+          ],
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "Completed processing with no errors."
+        },
+        "structured_info": {
+          "type": "string",
+          "example": "{\"cat\": \"dog\"}"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  ]
+}

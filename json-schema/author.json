@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/author.json",
+  "title": "Author",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "affiliation": {
+      "type": "string"
+    },
+    "affiliationROR": {
+      "type": "string",
+      "description": "Preferred identifier for the author affiliation."
+    },
+    "affiliations": {
+      "type": "array",
+      "items": {
+        "name": "string",
+        "ror_id": "string"
+      }
+    },
+    "affiliationISNI": {
+      "type": "string"
+    },
+    "orcid": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/tenant.json",
+  "title": "Tenant",
+  "type": "object",
+  "description": "Information about the <a href=\"https://datadryad.org/join_us\">Dryad member</a> associated with the dataset.",
+  "properties": {
+    "id": {
+      "format": "string"
+    },
+    "abbreviation": {
+      "format": "string"
+    },
+    "shortName": {
+      "format": "string"
+    },
+    "longName": {
+      "format": "string"
+    },
+    "domainName": {
+      "format": "string"
+    }
+  }
+}

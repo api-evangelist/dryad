@@ -1,0 +1,1002 @@
+{
+  "vocabulary": {
+    "name": "Dryad API Vocabulary",
+    "description": "Terms and concepts used in the Dryad REST API v2",
+    "url": "https://datadryad.org/api/v2",
+    "version": "2.1.0",
+    "terms": [
+      {
+        "term": "root",
+        "label": "Root",
+        "description": "The root resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_links",
+        "label": " Links",
+        "description": "_links property of root",
+        "type": "Property",
+        "domain": "root"
+      },
+      {
+        "term": "root_links",
+        "label": "Root Links",
+        "description": "The root links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "self",
+        "label": "Self",
+        "description": "self property of root_links",
+        "type": "Property",
+        "domain": "root_links"
+      },
+      {
+        "term": "stash:datasets",
+        "label": "Stash:Datasets",
+        "description": "stash:datasets property of root_links",
+        "type": "Property",
+        "domain": "root_links"
+      },
+      {
+        "term": "reports",
+        "label": "Reports",
+        "description": "reports property of root_links",
+        "type": "Property",
+        "domain": "root_links"
+      },
+      {
+        "term": "curies",
+        "label": "Curies",
+        "description": "curies property of root_links",
+        "type": "Property",
+        "domain": "root_links"
+      },
+      {
+        "term": "datasets",
+        "label": "Datasets",
+        "description": "The datasets resource",
+        "type": "Schema"
+      },
+      {
+        "term": "embedded_datasets",
+        "label": "Embedded Datasets",
+        "description": "The embedded datasets resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_embedded",
+        "label": " Embedded",
+        "description": "_embedded property of embedded_datasets",
+        "type": "Property",
+        "domain": "embedded_datasets"
+      },
+      {
+        "term": "dataset",
+        "label": "Dataset",
+        "description": "The dataset resource",
+        "type": "Schema"
+      },
+      {
+        "term": "dataset_links",
+        "label": "Dataset Links",
+        "description": "The dataset links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_links",
+        "label": " Links",
+        "description": "_links property of dataset_links",
+        "type": "Property",
+        "domain": "dataset_links"
+      },
+      {
+        "term": "hal_dataset_links",
+        "label": "Hal Dataset Links",
+        "description": "The hal dataset links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "stash:versions",
+        "label": "Stash:Versions",
+        "description": "stash:versions property of hal_dataset_links",
+        "type": "Property",
+        "domain": "hal_dataset_links"
+      },
+      {
+        "term": "stash:version",
+        "label": "Stash:Version",
+        "description": "stash:version property of hal_dataset_links",
+        "type": "Property",
+        "domain": "hal_dataset_links"
+      },
+      {
+        "term": "stash:download",
+        "label": "Stash:Download",
+        "description": "stash:download property of hal_dataset_links",
+        "type": "Property",
+        "domain": "hal_dataset_links"
+      },
+      {
+        "term": "curies",
+        "label": "Curies",
+        "description": "curies property of hal_dataset_links",
+        "type": "Property",
+        "domain": "hal_dataset_links"
+      },
+      {
+        "term": "dataset_submission",
+        "label": "Dataset Submission",
+        "description": "The dataset submission resource",
+        "type": "Schema"
+      },
+      {
+        "term": "op",
+        "label": "Op",
+        "description": "op property of dataset_submission",
+        "type": "Property",
+        "domain": "dataset_submission"
+      },
+      {
+        "term": "path",
+        "label": "Path",
+        "description": "path property of dataset_submission",
+        "type": "Property",
+        "domain": "dataset_submission"
+      },
+      {
+        "term": "value",
+        "label": "Value",
+        "description": "value property of dataset_submission",
+        "type": "Property",
+        "domain": "dataset_submission"
+      },
+      {
+        "term": "versions",
+        "label": "Versions",
+        "description": "The versions resource",
+        "type": "Schema"
+      },
+      {
+        "term": "embedded_versions",
+        "label": "Embedded Versions",
+        "description": "The embedded versions resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_embedded",
+        "label": " Embedded",
+        "description": "_embedded property of embedded_versions",
+        "type": "Property",
+        "domain": "embedded_versions"
+      },
+      {
+        "term": "version",
+        "label": "Version",
+        "description": "The version resource",
+        "type": "Schema"
+      },
+      {
+        "term": "version_links",
+        "label": "Version Links",
+        "description": "The version links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_links",
+        "label": " Links",
+        "description": "_links property of version_links",
+        "type": "Property",
+        "domain": "version_links"
+      },
+      {
+        "term": "hal_version_links",
+        "label": "Hal Version Links",
+        "description": "The hal version links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "stash:dataset",
+        "label": "Stash:Dataset",
+        "description": "stash:dataset property of hal_version_links",
+        "type": "Property",
+        "domain": "hal_version_links"
+      },
+      {
+        "term": "stash:files",
+        "label": "Stash:Files",
+        "description": "stash:files property of hal_version_links",
+        "type": "Property",
+        "domain": "hal_version_links"
+      },
+      {
+        "term": "stash:download",
+        "label": "Stash:Download",
+        "description": "stash:download property of hal_version_links",
+        "type": "Property",
+        "domain": "hal_version_links"
+      },
+      {
+        "term": "curies",
+        "label": "Curies",
+        "description": "curies property of hal_version_links",
+        "type": "Property",
+        "domain": "hal_version_links"
+      },
+      {
+        "term": "simple_version",
+        "label": "Simple Version",
+        "description": "The simple version resource",
+        "type": "Schema"
+      },
+      {
+        "term": "files",
+        "label": "Files",
+        "description": "The files resource",
+        "type": "Schema"
+      },
+      {
+        "term": "embedded_files",
+        "label": "Embedded Files",
+        "description": "The embedded files resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_embedded",
+        "label": " Embedded",
+        "description": "_embedded property of embedded_files",
+        "type": "Property",
+        "domain": "embedded_files"
+      },
+      {
+        "term": "file",
+        "label": "File",
+        "description": "The file resource",
+        "type": "Schema"
+      },
+      {
+        "term": "file_links",
+        "label": "File Links",
+        "description": "The file links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_links",
+        "label": " Links",
+        "description": "_links property of file_links",
+        "type": "Property",
+        "domain": "file_links"
+      },
+      {
+        "term": "processor_result",
+        "label": "Processor Result",
+        "description": "The processor result resource",
+        "type": "Schema"
+      },
+      {
+        "term": "processor_results",
+        "label": "Processor Results",
+        "description": "The processor results resource",
+        "type": "Schema"
+      },
+      {
+        "term": "url",
+        "label": "Url",
+        "description": "The url resource",
+        "type": "Schema"
+      },
+      {
+        "term": "url",
+        "label": "Url",
+        "description": "url property of url",
+        "type": "Property",
+        "domain": "url"
+      },
+      {
+        "term": "hal_file_links",
+        "label": "Hal File Links",
+        "description": "The hal file links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "stash:dataset",
+        "label": "Stash:Dataset",
+        "description": "stash:dataset property of hal_file_links",
+        "type": "Property",
+        "domain": "hal_file_links"
+      },
+      {
+        "term": "stash:version",
+        "label": "Stash:Version",
+        "description": "stash:version property of hal_file_links",
+        "type": "Property",
+        "domain": "hal_file_links"
+      },
+      {
+        "term": "stash:files",
+        "label": "Stash:Files",
+        "description": "stash:files property of hal_file_links",
+        "type": "Property",
+        "domain": "hal_file_links"
+      },
+      {
+        "term": "stash:download",
+        "label": "Stash:Download",
+        "description": "stash:download property of hal_file_links",
+        "type": "Property",
+        "domain": "hal_file_links"
+      },
+      {
+        "term": "curies",
+        "label": "Curies",
+        "description": "curies property of hal_file_links",
+        "type": "Property",
+        "domain": "hal_file_links"
+      },
+      {
+        "term": "dc_metadata",
+        "label": "Dc Metadata",
+        "description": "The dc metadata resource",
+        "type": "Schema"
+      },
+      {
+        "term": "title",
+        "label": "Title",
+        "description": "title property of dc_metadata",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "authors",
+        "label": "Authors",
+        "description": "authors property of dc_metadata",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "abstract",
+        "label": "Abstract",
+        "description": "An abstract introducing the dataset.",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "funders",
+        "label": "Funders",
+        "description": "funders property of dc_metadata",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "keywords",
+        "label": "Keywords",
+        "description": "keywords property of dc_metadata",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "fieldOfScience",
+        "label": "Fieldofscience",
+        "description": "A term from the FOS (Fields of Science and Technology) controlled vocabulary. The main category of the dataset.",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "hsiStatement",
+        "label": "Hsistatement",
+        "description": "A statement explaining the de-identification of any human subject data in the dataset.",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "methods",
+        "label": "Methods",
+        "description": "The methods by which the data was produced. Not required for publication.",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "usageNotes",
+        "label": "Usagenotes",
+        "description": "Usage notes for the dataset (Deprecated; It is preferred for this content to appear in the README file for the dataset). If the dataset has been retracted, the retraction statement will appear here.",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "locations",
+        "label": "Locations",
+        "description": "locations property of dc_metadata",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "relatedWorks",
+        "label": "Relatedworks",
+        "description": "relatedWorks property of dc_metadata",
+        "type": "Property",
+        "domain": "dc_metadata"
+      },
+      {
+        "term": "admin_values",
+        "label": "Admin Values",
+        "description": "The admin values resource",
+        "type": "Schema"
+      },
+      {
+        "term": "userId",
+        "label": "Userid",
+        "description": "The Dryad user ID, or ORCID iD, of the user who will submit the dataset. If this is unknown, the userId must be set to `0` to allow for an invitation link.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "publicationISSN",
+        "label": "Publicationissn",
+        "description": "An ISSN for the associated journal",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "publicationName",
+        "label": "Publicationname",
+        "description": "The title of the associated journal",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "manuscriptNumber",
+        "label": "Manuscriptnumber",
+        "description": "The internal manuscript number assigned to an associated article before publication",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "skipEmails",
+        "label": "Skipemails",
+        "description": "Administrator value. Prevents emails being sent automatically.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "triggerSubmitInvitation",
+        "label": "Triggersubmitinvitation",
+        "description": "Administrator value. Sends an editing invitation email to the first author.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "preserveCurationStatus",
+        "label": "Preservecurationstatus",
+        "description": "Administrator value. Prevents automatic curation status changes.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "holdForPeerReview",
+        "label": "Holdforpeerreview",
+        "description": "Administrator value. Sets whether the submission will be sent to curation or a peer review hold status.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "loosenValidation",
+        "label": "Loosenvalidation",
+        "description": "For superusers only.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "skipDataciteUpdate",
+        "label": "Skipdataciteupdate",
+        "description": "For superusers only.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "invoiceId",
+        "label": "Invoiceid",
+        "description": "For superusers only.",
+        "type": "Property",
+        "domain": "admin_values"
+      },
+      {
+        "term": "author",
+        "label": "Author",
+        "description": "The author resource",
+        "type": "Schema"
+      },
+      {
+        "term": "firstName",
+        "label": "Firstname",
+        "description": "firstName property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "lastName",
+        "label": "Lastname",
+        "description": "lastName property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "email",
+        "label": "Email",
+        "description": "email property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "affiliation",
+        "label": "Affiliation",
+        "description": "affiliation property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "affiliationROR",
+        "label": "Affiliationror",
+        "description": "Preferred identifier for the author affiliation.",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "affiliations",
+        "label": "Affiliations",
+        "description": "affiliations property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "affiliationISNI",
+        "label": "Affiliationisni",
+        "description": "affiliationISNI property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "orcid",
+        "label": "Orcid",
+        "description": "orcid property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "order",
+        "label": "Order",
+        "description": "order property of author",
+        "type": "Property",
+        "domain": "author"
+      },
+      {
+        "term": "simple_author",
+        "label": "Simple Author",
+        "description": "The simple author resource",
+        "type": "Schema"
+      },
+      {
+        "term": "firstName",
+        "label": "Firstname",
+        "description": "firstName property of simple_author",
+        "type": "Property",
+        "domain": "simple_author"
+      },
+      {
+        "term": "lastName",
+        "label": "Lastname",
+        "description": "lastName property of simple_author",
+        "type": "Property",
+        "domain": "simple_author"
+      },
+      {
+        "term": "email",
+        "label": "Email",
+        "description": "email property of simple_author",
+        "type": "Property",
+        "domain": "simple_author"
+      },
+      {
+        "term": "affiliation",
+        "label": "Affiliation",
+        "description": "affiliation property of simple_author",
+        "type": "Property",
+        "domain": "simple_author"
+      },
+      {
+        "term": "funder",
+        "label": "Funder",
+        "description": "The funder resource",
+        "type": "Schema"
+      },
+      {
+        "term": "organization",
+        "label": "Organization",
+        "description": "organization property of funder",
+        "type": "Property",
+        "domain": "funder"
+      },
+      {
+        "term": "identifier",
+        "label": "Identifier",
+        "description": "The organization identifier, for example a ROR ID.",
+        "type": "Property",
+        "domain": "funder"
+      },
+      {
+        "term": "identifierType",
+        "label": "Identifiertype",
+        "description": "Type of identifier \u2014 ror, isni, grid, crossref_funder_id or other.",
+        "type": "Property",
+        "domain": "funder"
+      },
+      {
+        "term": "awardNumber",
+        "label": "Awardnumber",
+        "description": "awardNumber property of funder",
+        "type": "Property",
+        "domain": "funder"
+      },
+      {
+        "term": "awardDescription",
+        "label": "Awarddescription",
+        "description": "Usually used for the program or the division of the award.",
+        "type": "Property",
+        "domain": "funder"
+      },
+      {
+        "term": "order",
+        "label": "Order",
+        "description": "order property of funder",
+        "type": "Property",
+        "domain": "funder"
+      },
+      {
+        "term": "relatedWork",
+        "label": "Relatedwork",
+        "description": "The relatedWork resource",
+        "type": "Schema"
+      },
+      {
+        "term": "relationship",
+        "label": "Relationship",
+        "description": "relationship property of relatedWork",
+        "type": "Property",
+        "domain": "relatedWork"
+      },
+      {
+        "term": "identifierType",
+        "label": "Identifiertype",
+        "description": "identifierType property of relatedWork",
+        "type": "Property",
+        "domain": "relatedWork"
+      },
+      {
+        "term": "identifier",
+        "label": "Identifier",
+        "description": "identifier property of relatedWork",
+        "type": "Property",
+        "domain": "relatedWork"
+      },
+      {
+        "term": "geolocation",
+        "label": "Geolocation",
+        "description": "The geolocation resource",
+        "type": "Schema"
+      },
+      {
+        "term": "place",
+        "label": "Place",
+        "description": "A place name.",
+        "type": "Property",
+        "domain": "geolocation"
+      },
+      {
+        "term": "box",
+        "label": "Box",
+        "description": "A bounding box.",
+        "type": "Property",
+        "domain": "geolocation"
+      },
+      {
+        "term": "point",
+        "label": "Point",
+        "description": "A coordinate point.",
+        "type": "Property",
+        "domain": "geolocation"
+      },
+      {
+        "term": "geolocationBox",
+        "label": "Geolocationbox",
+        "description": "The geolocationBox resource",
+        "type": "Schema"
+      },
+      {
+        "term": "swLongitude",
+        "label": "Swlongitude",
+        "description": "The longitude of the southwest corner of the box.",
+        "type": "Property",
+        "domain": "geolocationBox"
+      },
+      {
+        "term": "swLatitude",
+        "label": "Swlatitude",
+        "description": "The latitude of the southwest corner of the box.",
+        "type": "Property",
+        "domain": "geolocationBox"
+      },
+      {
+        "term": "neLongitude",
+        "label": "Nelongitude",
+        "description": "The longitude of the northeast corner of the box.",
+        "type": "Property",
+        "domain": "geolocationBox"
+      },
+      {
+        "term": "neLatitude",
+        "label": "Nelatitude",
+        "description": "The latitude of the northeast corner of the box.",
+        "type": "Property",
+        "domain": "geolocationBox"
+      },
+      {
+        "term": "geolocationPoint",
+        "label": "Geolocationpoint",
+        "description": "The geolocationPoint resource",
+        "type": "Schema"
+      },
+      {
+        "term": "latitude",
+        "label": "Latitude",
+        "description": "The latitude of the point.",
+        "type": "Property",
+        "domain": "geolocationPoint"
+      },
+      {
+        "term": "longitude",
+        "label": "Longitude",
+        "description": "The longitude of the point.",
+        "type": "Property",
+        "domain": "geolocationPoint"
+      },
+      {
+        "term": "embargo",
+        "label": "Embargo",
+        "description": "The embargo resource",
+        "type": "Schema"
+      },
+      {
+        "term": "embargoEndDate",
+        "label": "Embargoenddate",
+        "description": "The end date of the embargo, after which the dataset will become public.",
+        "type": "Property",
+        "domain": "embargo"
+      },
+      {
+        "term": "tenant",
+        "label": "Tenant",
+        "description": "Information about the <a href=\"https://datadryad.org/join_us\">Dryad member</a> associated with the dataset.",
+        "type": "Schema"
+      },
+      {
+        "term": "id",
+        "label": "Id",
+        "description": "id property of tenant",
+        "type": "Property",
+        "domain": "tenant"
+      },
+      {
+        "term": "abbreviation",
+        "label": "Abbreviation",
+        "description": "abbreviation property of tenant",
+        "type": "Property",
+        "domain": "tenant"
+      },
+      {
+        "term": "shortName",
+        "label": "Shortname",
+        "description": "shortName property of tenant",
+        "type": "Property",
+        "domain": "tenant"
+      },
+      {
+        "term": "longName",
+        "label": "Longname",
+        "description": "longName property of tenant",
+        "type": "Property",
+        "domain": "tenant"
+      },
+      {
+        "term": "domainName",
+        "label": "Domainname",
+        "description": "domainName property of tenant",
+        "type": "Property",
+        "domain": "tenant"
+      },
+      {
+        "term": "related_type",
+        "label": "Related Type",
+        "description": "The related type resource",
+        "type": "Schema"
+      },
+      {
+        "term": "work_type",
+        "label": "Work Type",
+        "description": "work_type property of related_type",
+        "type": "Property",
+        "domain": "related_type"
+      },
+      {
+        "term": "reports",
+        "label": "Reports",
+        "description": "The reports resource",
+        "type": "Schema"
+      },
+      {
+        "term": "_links",
+        "label": " Links",
+        "description": "_links property of reports",
+        "type": "Property",
+        "domain": "reports"
+      },
+      {
+        "term": "hal_links",
+        "label": "Hal Links",
+        "description": "The hal links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "self",
+        "label": "Self",
+        "description": "self property of hal_links",
+        "type": "Property",
+        "domain": "hal_links"
+      },
+      {
+        "term": "curies",
+        "label": "Curies",
+        "description": "curies property of hal_links",
+        "type": "Property",
+        "domain": "hal_links"
+      },
+      {
+        "term": "hal_self_link",
+        "label": "Hal Self Link",
+        "description": "The hal self link resource",
+        "type": "Schema"
+      },
+      {
+        "term": "self",
+        "label": "Self",
+        "description": "self property of hal_self_link",
+        "type": "Property",
+        "domain": "hal_self_link"
+      },
+      {
+        "term": "hal_page_links",
+        "label": "Hal Page Links",
+        "description": "The hal page links resource",
+        "type": "Schema"
+      },
+      {
+        "term": "first",
+        "label": "First",
+        "description": "first property of hal_page_links",
+        "type": "Property",
+        "domain": "hal_page_links"
+      },
+      {
+        "term": "last",
+        "label": "Last",
+        "description": "last property of hal_page_links",
+        "type": "Property",
+        "domain": "hal_page_links"
+      },
+      {
+        "term": "prev",
+        "label": "Prev",
+        "description": "prev property of hal_page_links",
+        "type": "Property",
+        "domain": "hal_page_links"
+      },
+      {
+        "term": "next",
+        "label": "Next",
+        "description": "next property of hal_page_links",
+        "type": "Property",
+        "domain": "hal_page_links"
+      },
+      {
+        "term": "paging_counts",
+        "label": "Paging Counts",
+        "description": "The paging counts resource",
+        "type": "Schema"
+      },
+      {
+        "term": "count",
+        "label": "Count",
+        "description": "count property of paging_counts",
+        "type": "Property",
+        "domain": "paging_counts"
+      },
+      {
+        "term": "total",
+        "label": "Total",
+        "description": "total property of paging_counts",
+        "type": "Property",
+        "domain": "paging_counts"
+      },
+      {
+        "term": "hal_link",
+        "label": "Hal Link",
+        "description": "The hal link resource",
+        "type": "Schema"
+      },
+      {
+        "term": "href",
+        "label": "Href",
+        "description": "href property of hal_link",
+        "type": "Property",
+        "domain": "hal_link"
+      },
+      {
+        "term": "hal_curie",
+        "label": "Hal Curie",
+        "description": "The hal curie resource",
+        "type": "Schema"
+      },
+      {
+        "term": "name",
+        "label": "Name",
+        "description": "name property of hal_curie",
+        "type": "Property",
+        "domain": "hal_curie"
+      },
+      {
+        "term": "href",
+        "label": "Href",
+        "description": "href property of hal_curie",
+        "type": "Property",
+        "domain": "hal_curie"
+      },
+      {
+        "term": "templated",
+        "label": "Templated",
+        "description": "templated property of hal_curie",
+        "type": "Property",
+        "domain": "hal_curie"
+      },
+      {
+        "term": "hal_paged_response",
+        "label": "Hal Paged Response",
+        "description": "The hal paged response resource",
+        "type": "Schema"
+      },
+      {
+        "term": "url_json",
+        "label": "Url Json",
+        "description": "The url json resource",
+        "type": "Schema"
+      },
+      {
+        "term": "url",
+        "label": "Url",
+        "description": "url property of url_json",
+        "type": "Property",
+        "domain": "url_json"
+      },
+      {
+        "term": "Error",
+        "label": "Error",
+        "description": "The Error resource",
+        "type": "Schema"
+      },
+      {
+        "term": "error",
+        "label": "Error",
+        "description": "error property of Error",
+        "type": "Property",
+        "domain": "Error"
+      }
+    ]
+  }
+}

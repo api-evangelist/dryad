@@ -42,6 +42,14 @@ apis:
         url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
       - type: FinOps
         url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/openapi/openapi.yml
+      - type: JSONSchema
+        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+      - type: JSONLDContext
+        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+      - type: Vocabulary
+        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
     contact:
       - FN: Dryad Support
         email: help@datadryad.org
@@ -67,6 +75,7 @@ common:
     url: https://datadryad.org/institutions
   - type: PublisherPartners
     url: https://datadryad.org/publishers
+modified: "2026-06-13"
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

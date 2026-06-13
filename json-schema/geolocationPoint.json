@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/geolocationPoint.json",
+  "title": "Geolocationpoint",
+  "type": "object",
+  "properties": {
+    "latitude": {
+      "description": "The latitude of the point.",
+      "type": "number"
+    },
+    "longitude": {
+      "description": "The longitude of the point.",
+      "type": "number"
+    }
+  }
+}

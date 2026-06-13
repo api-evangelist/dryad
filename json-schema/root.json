@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/root.json",
+  "title": "Root",
+  "type": "object",
+  "properties": {
+    "_links": {
+      "$ref": "#/components/schemas/root_links"
+    }
+  },
+  "required": [
+    "_links"
+  ]
+}

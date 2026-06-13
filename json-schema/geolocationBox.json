@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/geolocationBox.json",
+  "title": "Geolocationbox",
+  "properties": {
+    "swLongitude": {
+      "description": "The longitude of the southwest corner of the box.",
+      "type": "number"
+    },
+    "swLatitude": {
+      "description": "The latitude of the southwest corner of the box.",
+      "type": "number"
+    },
+    "neLongitude": {
+      "description": "The longitude of the northeast corner of the box.",
+      "type": "number"
+    },
+    "neLatitude": {
+      "description": "The latitude of the northeast corner of the box.",
+      "type": "number"
+    }
+  }
+}

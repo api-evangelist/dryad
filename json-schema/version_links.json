@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/version_links.json",
+  "title": "Version Links",
+  "properties": {
+    "_links": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/hal_self_link"
+        },
+        {
+          "$ref": "#/components/schemas/hal_version_links"
+        }
+      ]
+    }
+  }
+}

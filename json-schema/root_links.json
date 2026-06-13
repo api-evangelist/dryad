@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/root_links.json",
+  "title": "Root Links",
+  "type": "object",
+  "properties": {
+    "self": {
+      "$ref": "#/components/schemas/hal_link"
+    },
+    "stash:datasets": {
+      "$ref": "#/components/schemas/hal_link"
+    },
+    "reports": {
+      "$ref": "#/components/schemas/hal_link"
+    },
+    "curies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/hal_curie"
+      }
+    }
+  },
+  "required": [
+    "self"
+  ]
+}

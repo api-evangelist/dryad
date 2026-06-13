@@ -1,0 +1,80 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "dryad": "https://datadryad.org/api/v2#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dataset": "dryad:dataset",
+    "version": "dryad:version",
+    "file": "dryad:file",
+    "doi": {
+      "@id": "dryad:doi",
+      "@type": "@id"
+    },
+    "title": "schema:name",
+    "abstract": "schema:description",
+    "authors": "schema:author",
+    "keywords": "schema:keywords",
+    "license": "schema:license",
+    "versionNumber": "dryad:versionNumber",
+    "publicationDate": {
+      "@id": "schema:datePublished",
+      "@type": "xsd:date"
+    },
+    "lastModificationDate": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:date"
+    },
+    "storageSize": "dryad:storageSize",
+    "sharingLink": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "identifier": "schema:identifier",
+    "relatedWorks": "schema:citation",
+    "funders": "schema:funder",
+    "geolocation": "schema:spatialCoverage",
+    "fileName": "dryad:fileName",
+    "mimeType": "dryad:mimeType",
+    "size": "dryad:size",
+    "digestType": "dryad:digestType",
+    "digestValue": "dryad:digestValue",
+    "uploadedDate": {
+      "@id": "dryad:uploadedDate",
+      "@type": "xsd:dateTime"
+    },
+    "fileClass": "dryad:fileClass",
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "firstName": "schema:givenName",
+    "lastName": "schema:familyName",
+    "affiliation": "schema:affiliation",
+    "orcid": {
+      "@id": "dryad:orcid",
+      "@type": "@id"
+    },
+    "funderName": "schema:legalName",
+    "grantNumber": "dryad:grantNumber",
+    "identifierType": "dryad:identifierType",
+    "embargo": "dryad:embargo",
+    "curationStatus": "dryad:curationStatus",
+    "tenant": "dryad:tenant"
+  },
+  "@type": "schema:WebAPI",
+  "@id": "https://datadryad.org/api/v2",
+  "schema:name": "Dryad REST API",
+  "schema:description": "Dryad REST API v2 for submitting, updating, and retrieving research datasets",
+  "schema:version": "2.1.0",
+  "schema:url": "https://datadryad.org/api/v2/docs",
+  "schema:provider": {
+    "@type": "schema:Organization",
+    "schema:name": "Dryad",
+    "schema:url": "https://datadryad.org",
+    "schema:email": "help@datadryad.org"
+  },
+  "schema:termsOfService": "https://datadryad.org/terms",
+  "schema:documentation": "https://datadryad.org/api/v2/docs",
+  "schema:license": "https://datadryad.org/terms"
+}

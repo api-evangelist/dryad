@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/dataset_submission.json",
+  "title": "Dataset Submission",
+  "properties": {
+    "op": {
+      "type": "string",
+      "enum": [
+        "replace"
+      ],
+      "example": "replace"
+    },
+    "path": {
+      "type": "string",
+      "enum": [
+        "/versionStatus",
+        "/curationStatus",
+        "publicationISSN"
+      ],
+      "example": "/versionStatus"
+    },
+    "value": {
+      "type": "string",
+      "oneOf": [
+        {
+          "title": "/versionStatus",
+          "enum": [
+            "in_progress",
+            "processing",
+            "submitted"
+          ]
+        },
+        {
+          "title": "/curationStatus",
+          "enum": [
+            "queued",
+            "submitted",
+            "peer_review",
+            "curation",
+            "action_required",
+            "withdrawn"
+          ]
+        },
+        {
+          "title": "/publicationISSN"
+        }
+      ],
+      "example": "queued"
+    }
+  }
+}

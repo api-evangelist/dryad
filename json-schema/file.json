@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/file.json",
+  "title": "File",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/file_links"
+    },
+    {
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "mimeType": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string"
+        },
+        "digestType": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}
