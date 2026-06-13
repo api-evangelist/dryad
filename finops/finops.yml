@@ -1,0 +1,75 @@
+finops:
+  description: Dryad operates on a cost-recovery basis as a nonprofit. Costs are incurred primarily around data submission and curation through Data Publishing Charges (DPCs). API access itself is free; costs apply to dataset publication services.
+  currency: USD
+  pricingURL: https://datadryad.org/help/requirements/costs
+  updatedAt: "2025-05-06"
+
+  dataPublishingCharges:
+    description: Data Publishing Charges (DPC) cover the cost of curating, publishing, and preserving one dataset. Applies to unsponsored authors submitting directly.
+    tiers:
+      - maxSizeGB: 5
+        fee: 150.00
+        perGB: 30.00
+      - maxSizeGB: 10
+        fee: 180.00
+        perGB: 18.00
+      - maxSizeGB: 50
+        fee: 520.00
+        perGB: 10.40
+      - maxSizeGB: 100
+        fee: 808.00
+        perGB: 8.08
+      - maxSizeGB: 250
+        fee: 1750.00
+        perGB: 7.00
+      - maxSizeGB: 500
+        fee: 3086.00
+        perGB: 6.17
+      - maxSizeGB: 1000
+        fee: 6077.00
+        perGB: 6.08
+      - maxSizeGB: 2000
+        fee: 12162.00
+        perGB: 6.08
+
+  sponsoredLargeDataFees:
+    description: For authors affiliated with institutional or publisher partners, datasets up to 10 GB are sponsored. Datasets exceeding 10 GB incur large data fees charged to the partner or author.
+    tiers:
+      - rangeDescription: ">10 GB to 50 GB"
+        fee: 259.00
+      - rangeDescription: ">50 GB to 100 GB"
+        fee: 522.00
+      - rangeDescription: ">100 GB to 250 GB"
+        fee: 1130.00
+      - rangeDescription: ">250 GB to 500 GB"
+        fee: 2232.00
+      - rangeDescription: ">500 GB to 1 TB"
+        fee: 4348.00
+      - rangeDescription: ">1 TB to 2 TB"
+        fee: 8809.00
+
+  additionalFees:
+    - name: Invoice Administration Fee
+      description: Fee for requesting an invoice for payment instead of online credit card payment
+      amount: 199.00
+      currency: USD
+
+    - name: Private for Peer Review Fee
+      description: Nonrefundable fee to place a dataset in private peer review status; applied toward the final DPC upon publication
+      amount: 50.00
+      currency: USD
+      notes: Nonrefundable; credited toward the final DPC
+
+  waivers:
+    description: Fee waiver applications are available for authors unable to pay the DPC. Waivers apply only to submissions under 10 GB.
+    url: https://datadryad.org/help/requirements/costs
+    conditions:
+      - Only for datasets under 10 GB
+      - Subject to Dryad review and approval
+      - Voucher payments no longer accepted as of June 2024
+
+  partnerPricing:
+    description: Institutional and publisher/society partners pay annual service fees (sliding scale based on organization revenue/expenditure) and receive sponsored DPCs for affiliated authors. Pricing is customized; contact Dryad for quotes.
+    institutionsURL: https://datadryad.org/institutions
+    publishersURL: https://datadryad.org/publishers
+    contactEmail: partnerships@datadryad.org

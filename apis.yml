@@ -1,0 +1,72 @@
+name: Dryad
+description: Dryad is a nonprofit open data publishing platform and repository that enables researchers to publish, preserve, and access research datasets. It provides a REST API for submitting, updating, and retrieving datasets associated with peer-reviewed publications in biology, ecology, and related disciplines.
+image: https://datadryad.org/images/logo.png
+tags:
+  - Research Data
+  - Open Science
+  - Data Repository
+  - Datasets
+  - Biology
+  - Ecology
+  - Open Access
+url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/apis.yml
+specificationVersion: "0.19"
+apis:
+  - name: Dryad REST API
+    description: The Dryad REST API v2 enables detailed interaction with Dryad dataset contents, including searching, submitting, publishing, updating, and downloading research datasets with DOI assignment and curation support.
+    image: https://datadryad.org/images/logo.png
+    humanURL: https://datadryad.org/api/v2/docs
+    baseURL: https://datadryad.org/api/v2
+    tags:
+      - Datasets
+      - Research Data
+      - Data Submission
+      - DOI
+      - Open Science
+    properties:
+      - type: Documentation
+        url: https://datadryad.org/api/v2/docs
+      - type: GitHubRepository
+        url: https://github.com/datadryad/dryad-app
+      - type: SubmissionGuide
+        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+      - type: SearchGuide
+        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+      - type: APIAccounts
+        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+      - type: DatasetMetadata
+        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+      - type: RateLimits
+        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+    contact:
+      - FN: Dryad Support
+        email: help@datadryad.org
+        url: https://datadryad.org/contact
+common:
+  - type: Authentication
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: TermsOfService
+    url: https://datadryad.org/terms
+  - type: PrivacyPolicy
+    url: https://datadryad.org/privacy
+  - type: Pricing
+    url: https://datadryad.org/help/requirements/costs
+  - type: Contact
+    url: https://datadryad.org/contact
+  - type: Blog
+    url: https://blog.datadryad.org
+  - type: GitHub
+    url: https://github.com/datadryad
+  - type: SignUp
+    url: https://datadryad.org/account
+  - type: InstitutionalPartners
+    url: https://datadryad.org/institutions
+  - type: PublisherPartners
+    url: https://datadryad.org/publishers
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

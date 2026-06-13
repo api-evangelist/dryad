@@ -1,0 +1,66 @@
+plans:
+  - name: Anonymous Access
+    description: Free public access to search and retrieve published datasets without authentication. No account required.
+    type: free
+    features:
+      - Search datasets via the Search API
+      - Retrieve published dataset metadata
+      - Download published dataset files
+      - Access dataset versions and file listings
+    limits:
+      - type: authentication
+        description: No authentication token required; access restricted to published datasets only
+
+  - name: API Account (Authenticated)
+    description: Authenticated access using OAuth2 client credentials. Provides higher rate limits and access to private/in-progress datasets associated with the account's institution or journal.
+    type: free
+    url: https://datadryad.org/account
+    features:
+      - All anonymous access features
+      - Access datasets not yet public (associated with the account's community)
+      - Update datasets associated with the account's community
+      - Higher rate limits than anonymous access
+      - Submit new datasets via the Submission API
+      - Upload files directly or by URL reference
+      - Manage dataset curation status (peer review hold)
+      - Access reporting endpoints
+    authentication:
+      type: OAuth2
+      grantType: client_credentials
+      tokenEndpoint: https://datadryad.org/oauth/token
+      tokenDuration: 10 hours
+    requirements:
+      - Dryad account (ORCID login via web interface)
+      - API account created via My Account page at datadryad.org
+
+  - name: Institutional Partner API
+    description: API access configured for institutional partners covering dataset submissions for affiliated authors. Submissions up to 10 GB are sponsored by the institution.
+    type: paid
+    url: https://datadryad.org/institutions
+    features:
+      - All authenticated API account features
+      - Sponsored submissions up to 10 GB for affiliated authors
+      - Access to datasets from affiliated users
+      - Administrative dataset management
+      - Curation activity access (superusers)
+      - Internal metadata management
+    pricing:
+      - description: Annual service fee based on institution size (sliding scale)
+        currency: USD
+        billing: annual
+      - description: Sponsored DPC for affiliated author submissions up to 10 GB
+        currency: USD
+        billing: per-dataset
+
+  - name: Publisher / Journal Partner API
+    description: API access for publishing systems integrating with Dryad for manuscript-linked data submission workflows.
+    type: paid
+    url: https://datadryad.org/publishers
+    features:
+      - All authenticated API account features
+      - Journal manuscript metadata linking (manuscriptNumber, publicationISSN)
+      - Embedded submission workflows
+      - Editorial Manager bridge integration support
+      - Peer review hold management
+      - Author notification integration
+    contact: partnerships@datadryad.org

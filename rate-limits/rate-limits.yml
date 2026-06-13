@@ -1,0 +1,42 @@
+rateLimits:
+  - name: Anonymous Rate Limit
+    description: Default rate limits applied to unauthenticated requests to the Dryad API. Specific thresholds are not publicly documented; authenticated accounts receive higher limits.
+    type: anonymous
+    notes: No specific numeric rate limits are published for anonymous access. The API terms of service prohibit actions that impair Dryad's services or compromise infrastructure security and functionality.
+
+  - name: Authenticated Rate Limit
+    description: Higher rate limits applied to requests authenticated via OAuth2 bearer tokens. Authenticated accounts are explicitly noted to have higher access rates than anonymous users.
+    type: authenticated
+    notes: Specific numeric thresholds for authenticated rate limits are not publicly documented. Tokens are valid for 10 hours and must be renewed upon expiry.
+
+  - name: Search API Pagination
+    description: The Search API enforces a maximum page size of 100 results per request.
+    type: pagination
+    limits:
+      - name: per_page maximum
+        value: 100
+        unit: results per request
+      - name: per_page default
+        value: 10
+        unit: results per request
+
+  - name: Dataset Size Limits
+    description: File upload and dataset size limits are enforced through the fee structure rather than hard API limits. Fee waivers are only available for datasets under 10 GB.
+    type: storage
+    limits:
+      - name: Standard sponsored tier
+        value: 10
+        unit: GB
+        description: Datasets up to 10 GB are covered under standard institutional/publisher sponsorship
+      - name: Maximum dataset size (priced tier)
+        value: 2000
+        unit: GB
+        description: Up to 2 TB maximum with associated large data fees
+
+  - name: Token Validity
+    description: OAuth2 bearer tokens issued via client credentials grant expire after 10 hours and must be renewed.
+    type: token
+    limits:
+      - name: Token duration
+        value: 10
+        unit: hours
