@@ -69,7 +69,7 @@ common:
     url: https://blog.datadryad.org
   - type: GitHub
     url: https://github.com/datadryad
-  - type: SignUp
+  - type: Signup
     url: https://datadryad.org/account
   - type: InstitutionalPartners
     url: https://datadryad.org/institutions
