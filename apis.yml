@@ -55,6 +55,10 @@ apis:
         email: help@datadryad.org
         url: https://datadryad.org/contact
 common:
+  - type: DomainSecurity
+    url: security/dryad-domain-security.yml
+  - type: Authentication
+    url: authentication/dryad-authentication.yml
   - type: Authentication
     url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
   - type: TermsOfService
