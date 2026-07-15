@@ -55,6 +55,8 @@ apis:
         email: help@datadryad.org
         url: https://datadryad.org/contact
 common:
+  - type: AgenticAccess
+    url: agentic-access/dryad-agentic-access.yml
   - type: DomainSecurity
     url: security/dryad-domain-security.yml
   - type: Authentication
