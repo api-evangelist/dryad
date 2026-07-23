@@ -1,0 +1,263 @@
+openapi: 3.1.0
+info:
+  title: Dryad datasets internal API
+  description: "Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents. The most common case is to use GET requests to retrieve information about datasets, versions, and files.\n\nWhen using the API, any DOI included must be <a href=\"https://www.w3schools.com/tags/ref_urlencode.ASP\" target=\"blank\">URL-encoded<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> to ensure correct processing. Anonymous users of the API are limited to 30 requests per minute, and are not allowed to download data files. \n\nExamples:\n\n- [List datasets](https://datadryad.org/api/v2/datasets)\n- [Search for datasets](https://datadryad.org/api/v2/search?q=carbon)\n- [Get information about a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7)\n- [List versions of a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7/versions)\n- [List files in a version](https://datadryad.org/api/v2/versions/26724/files)\n\nDetailed documentation:\n\n- For details on all of our REST API operations, click the links in the menu on this page.\n- [Search API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md)\n- [Submission API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md)\n\n## API accounts \n\nTo access more powerful features, an API account is required. API accounts allow users to:\n\n- Access the API at higher rates (authenticated users may make up to 240 requests per minute)\n- Download data files\n- Access datasets that are not yet public, but are associated with the account's community (institution, journal, etc.)\n- Update datasets associated with the account's community\n\nSee the <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\" target=\"blank\">API accounts document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> for more information on requesting an API account and using it to access datasets.\n\n\n## Submission\n\nThe Submission API is used by organizations that partner closely with Dryad, and use systems to create dataset submissions directly. Please contact us if you are [interested in partnering with Dryad](/contact#get-involved), and setting up an API account for submission.\n\nThe <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md\" target=\"blank\">API submission examples document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> gives concrete examples of submission through the Dryad API.\n\n\n### Dryad sandbox\n\n<a href=\"https://sandbox.datadryad.org/\" target=\"blank\">Dryad's sandbox server<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> allows users to experiment with data submission and the Dryad API, without worrying about the effects on \"real\" data. Anyone may create an account on the sandbox server for testing purposes. When creating an account, keep in mind that Dryad's sandbox relies on the <a href=\"https://sandbox.orcid.org/\" target=\"_blank\">sandbox version of ORCID<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a>, which allows you to make test ORCID accounts. Sandbox ORCID IDs should be used in the Dryad sandbox, while use of Dryad's production system requires a real ORCID ID.\n"
+  version: 2.1.0
+servers:
+- url: https://datadryad.org/api/v2
+  description: Main Dryad server
+- url: https://sandbox.datadryad.org/api/v2
+  description: Sandbox server, for testing new features.
+tags:
+- name: internal
+  description: Internal APIs not of general interest to the public
+paths:
+  /processor_results/{id}:
+    get:
+      security:
+      - bearerAuth: []
+      summary: Get processor results for the ID given
+      tags:
+      - internal
+      description: Shows the processor results stored in the database for the given ID.
+      parameters:
+      - $ref: '#/components/parameters/processor_result_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_result'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      security:
+      - bearerAuth: []
+      summary: Overwrite processor results for the ID given
+      tags:
+      - internal
+      description: Overwrite the processor results stored in the database for the given ID, resource_id, dates can't be manually changed
+      parameters:
+      - $ref: '#/components/parameters/processor_result_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results that were saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_result'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /versions/{version_id}/processor_results:
+    get:
+      security:
+      - bearerAuth: []
+      summary: Get processor results for the version given
+      tags:
+      - internal
+      description: Shows the processor results stored in the database for the resource_id
+      parameters:
+      - $ref: '#/components/parameters/version_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results for the version ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_results'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      security:
+      - bearerAuth: []
+      summary: Create processor results for the ID given
+      tags:
+      - internal
+      description: Create a new processor result in the database.
+      parameters:
+      - $ref: '#/components/parameters/processor_result_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results that were saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_result'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /datasets/{doi}/related_works/{related_doi}:
+    put:
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/related_type'
+      summary: Update related works for a Dryad DOI
+      tags:
+      - internal
+      description: Adds or updates related works for a Dryad DOI.
+      parameters:
+      - $ref: '#/components/parameters/doi'
+      - $ref: '#/components/parameters/doi'
+      responses:
+        '200':
+          description: A JSON representation of the related work that was saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/relatedWork'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
+    version_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: The version ID is a unique integer and can be obtained from the list of versions for a dataset.
+    processor_result_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: The processor results ID for a single item.
+  schemas:
+    relatedWork:
+      properties:
+        relationship:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+        identifierType:
+          type: string
+        identifier:
+          type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    processor_result:
+      allOf:
+      - properties:
+          id:
+            type: integer
+            example: 27
+          resource_id:
+            type: integer
+            example: 48
+          processing_type:
+            type: string
+            enum:
+            - excel_to_csv
+            - compressed_info
+            - frictionless
+            example: excel_to_csv
+          parent_id:
+            type: integer
+            example: 747
+          completion_state:
+            type: string
+            enum:
+            - not_started
+            - processing
+            - success
+            - error
+            example: success
+          message:
+            type: string
+            example: Completed processing with no errors.
+          structured_info:
+            type: string
+            example: '{"cat": "dog"}'
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
+    processor_results:
+      type: array
+      items:
+        $ref: '#/components/schemas/processor_result'
+    related_type:
+      type: object
+      properties:
+        work_type:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+          example: article
+  responses:
+    Unacceptable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
+    unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: unauthorized
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Not Found
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

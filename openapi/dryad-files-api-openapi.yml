@@ -1,0 +1,292 @@
+openapi: 3.1.0
+info:
+  title: Dryad datasets files API
+  description: "Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents. The most common case is to use GET requests to retrieve information about datasets, versions, and files.\n\nWhen using the API, any DOI included must be <a href=\"https://www.w3schools.com/tags/ref_urlencode.ASP\" target=\"blank\">URL-encoded<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> to ensure correct processing. Anonymous users of the API are limited to 30 requests per minute, and are not allowed to download data files. \n\nExamples:\n\n- [List datasets](https://datadryad.org/api/v2/datasets)\n- [Search for datasets](https://datadryad.org/api/v2/search?q=carbon)\n- [Get information about a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7)\n- [List versions of a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7/versions)\n- [List files in a version](https://datadryad.org/api/v2/versions/26724/files)\n\nDetailed documentation:\n\n- For details on all of our REST API operations, click the links in the menu on this page.\n- [Search API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md)\n- [Submission API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md)\n\n## API accounts \n\nTo access more powerful features, an API account is required. API accounts allow users to:\n\n- Access the API at higher rates (authenticated users may make up to 240 requests per minute)\n- Download data files\n- Access datasets that are not yet public, but are associated with the account's community (institution, journal, etc.)\n- Update datasets associated with the account's community\n\nSee the <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\" target=\"blank\">API accounts document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> for more information on requesting an API account and using it to access datasets.\n\n\n## Submission\n\nThe Submission API is used by organizations that partner closely with Dryad, and use systems to create dataset submissions directly. Please contact us if you are [interested in partnering with Dryad](/contact#get-involved), and setting up an API account for submission.\n\nThe <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md\" target=\"blank\">API submission examples document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> gives concrete examples of submission through the Dryad API.\n\n\n### Dryad sandbox\n\n<a href=\"https://sandbox.datadryad.org/\" target=\"blank\">Dryad's sandbox server<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> allows users to experiment with data submission and the Dryad API, without worrying about the effects on \"real\" data. Anyone may create an account on the sandbox server for testing purposes. When creating an account, keep in mind that Dryad's sandbox relies on the <a href=\"https://sandbox.orcid.org/\" target=\"_blank\">sandbox version of ORCID<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a>, which allows you to make test ORCID accounts. Sandbox ORCID IDs should be used in the Dryad sandbox, while use of Dryad's production system requires a real ORCID ID.\n"
+  version: 2.1.0
+servers:
+- url: https://datadryad.org/api/v2
+  description: Main Dryad server
+- url: https://sandbox.datadryad.org/api/v2
+  description: Sandbox server, for testing new features.
+tags:
+- name: files
+  description: Operations on individual files of a dataset
+paths:
+  /files/{id}:
+    get:
+      summary: Get metadata information about a file
+      tags:
+      - files
+      description: Returns file metadata information visible to the user (or public) by the file ID.  The version file list embeds this metadata and also lists the file IDs.
+      parameters:
+      - $ref: '#/components/parameters/file_id'
+      responses:
+        '200':
+          description: A single file.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/file'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/file.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/file_id'
+      summary: Remove a file from an in-progress dataset version
+      tags:
+      - files
+      description: This action only works on an in-progress dataset (this means that the latest version of a dataset associated with this file has to be in-progress). It will destroy the metadata and file if it's a staged file that hasn't been submitted to the repository yet.  If the file was submitted previously in an earlier version of the same dataset it will stage removal from the in-progress dataset version.  In order to finalize staged file changes into the storage repository, the in-progress dataset must be submitted again after all changes are ready.
+      responses:
+        '201':
+          description: The file and metadata was removed from staging.  Or the file and metadata was staged for removal from this version.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/file'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/file.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: This file must be part of an an in-progress version.
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /files/{id}/download:
+    get:
+      summary: Download a specific file
+      tags:
+      - files
+      description: Only files that have been stored in the storage repository may be downloaded (and ability to download may depend on the user).  Versions of a dataset still in-progress only have staged files that may not be downloaded until they have been submitted to the storage repository.
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/file_id'
+      responses:
+        '200':
+          description: The binary content of the file downloads as the http body.  The "Content-Type" and "Content-Disposition" headers will be set to reflect the file content-type and filename when downloading (following http standards).
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /datasets/{doi}/files/{filename}:
+    put:
+      summary: Upload and stage a file for an in-progress dataset
+      tags:
+      - files
+      description: Allows uploading a file to be staged for submission to the storage repository. The files will be stored in the storage repository after the dataset is submitted.  The body of the request will be the file you are uploading.  Set the `Content-Type` http header to the appropriate mimetype for your file when uploading.
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/doi'
+      - $ref: '#/components/parameters/filename'
+      requestBody:
+        description: A binary file with `Content-Type` set.
+        required: true
+        content:
+          '*/*':
+            schema:
+              type: string
+              format: binary
+      responses:
+        '201':
+          description: File was created on the server.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/file'
+                - properties:
+                    url:
+                      type: string
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/upload_file.json
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /datasets/{doi}/urls:
+    post:
+      summary: Stage a file submission by URL
+      tags:
+      - files
+      description: 'The URL you specify will be deposited into the storage repository from a publicly accessible URL on the internet when the in-progress dataset is submitted.  The dataset must be an in-progress dataset. The URL will be validated and metadata about it obtained to populate metadata about the file when it is added.  Send the url to be retrieved as part of a JSON document like **{''url'': ''http://example.org/testing/my/file.csv'' }**.  Priviliged users may have additional options to specify URL metadata rather than having live-validation and metadata gathering performed from the Internet.'
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/doi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/url_json'
+      responses:
+        '201':
+          description: Metadata for the URL was saved and the response JSON indicates information populated for a file object based on the URL.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/file'
+                - properties:
+                    url:
+                      type: string
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/upload_file.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
+    filename:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: The filename is the filename for the file. It should be escaped in the URL (for example 'cat tundra.jpg' would be 'cat%20tundra.jpg'.  Your programming language will have a library to encode for you.
+    file_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: The file ID is a unique integer and can be obtained from the list of files for a version of a dataset.
+  schemas:
+    file_links:
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_file_links'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    hal_self_link:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
+    file:
+      allOf:
+      - $ref: '#/components/schemas/file_links'
+      - properties:
+          path:
+            type: string
+          size:
+            type: integer
+          mimeType:
+            type: string
+          status:
+            type: string
+          digest:
+            type: string
+          digestType:
+            type: string
+          description:
+            type: string
+    hal_file_links:
+      properties:
+        stash:dataset:
+          $ref: '#/components/schemas/hal_link'
+        stash:version:
+          $ref: '#/components/schemas/hal_link'
+        stash:files:
+          $ref: '#/components/schemas/hal_link'
+        stash:download:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+    url_json:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
+  responses:
+    Unacceptable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Unauthorized, must have current bearer token.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Not Found
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
