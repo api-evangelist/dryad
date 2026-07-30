@@ -1,5 +1,18 @@
 name: Dryad
 description: Dryad is a nonprofit open data publishing platform and repository that enables researchers to publish, preserve, and access research datasets. It provides a REST API for submitting, updating, and retrieving datasets associated with peer-reviewed publications in biology, ecology, and related disciplines.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://datadryad.org/images/logo.png
 tags:
   - Research Data
@@ -12,48 +25,265 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/apis.yml
 specificationVersion: "0.19"
 apis:
-  - name: Dryad REST API
-    description: The Dryad REST API v2 enables detailed interaction with Dryad dataset contents, including searching, submitting, publishing, updating, and downloading research datasets with DOI assignment and curation support.
-    image: https://datadryad.org/images/logo.png
-    humanURL: https://datadryad.org/api/v2/docs
-    baseURL: https://datadryad.org/api/v2
-    tags:
-      - Datasets
-      - Research Data
-      - Data Submission
-      - DOI
-      - Open Science
-    properties:
-      - type: Documentation
-        url: https://datadryad.org/api/v2/docs
-      - type: GitHubRepository
-        url: https://github.com/datadryad/dryad-app
-      - type: SubmissionGuide
-        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
-      - type: SearchGuide
-        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
-      - type: APIAccounts
-        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
-      - type: DatasetMetadata
-        url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
-      - type: Plans
-        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
-      - type: RateLimits
-        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
-      - type: FinOps
-        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/openapi/openapi.yml
-      - type: JSONSchema
-        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
-      - type: JSONLDContext
-        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
-      - type: Vocabulary
-        url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
-    contact:
-      - FN: Dryad Support
-        email: help@datadryad.org
-        url: https://datadryad.org/contact
+- aid: dryad:dryad-datasets-api
+  name: Dryad datasets API
+  description: Dataset operations
+  humanURL: https://datadryad.org/api/v2/docs
+  baseURL: https://datadryad.org/api/v2
+  tags:
+  - datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/dryad-datasets-api-openapi.yml
+  - type: Documentation
+    url: https://datadryad.org/api/v2/docs
+  - type: GitHubRepository
+    url: https://github.com/datadryad/dryad-app
+  - type: SubmissionGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+  - type: SearchGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+  - type: APIAccounts
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: DatasetMetadata
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
+- aid: dryad:dryad-files-api
+  name: Dryad files API
+  description: Operations on individual files of a dataset
+  humanURL: https://datadryad.org/api/v2/docs
+  baseURL: https://datadryad.org/api/v2
+  tags:
+  - files
+  properties:
+  - type: OpenAPI
+    url: openapi/dryad-files-api-openapi.yml
+  - type: Documentation
+    url: https://datadryad.org/api/v2/docs
+  - type: GitHubRepository
+    url: https://github.com/datadryad/dryad-app
+  - type: SubmissionGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+  - type: SearchGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+  - type: APIAccounts
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: DatasetMetadata
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
+- aid: dryad:dryad-internal-api
+  name: Dryad internal API
+  description: Internal APIs not of general interest to the public
+  humanURL: https://datadryad.org/api/v2/docs
+  baseURL: https://datadryad.org/api/v2
+  tags:
+  - internal
+  properties:
+  - type: OpenAPI
+    url: openapi/dryad-internal-api-openapi.yml
+  - type: Documentation
+    url: https://datadryad.org/api/v2/docs
+  - type: GitHubRepository
+    url: https://github.com/datadryad/dryad-app
+  - type: SubmissionGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+  - type: SearchGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+  - type: APIAccounts
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: DatasetMetadata
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
+- aid: dryad:dryad-reports-api
+  name: Dryad reports API
+  description: Reports on content in Dryad
+  humanURL: https://datadryad.org/api/v2/docs
+  baseURL: https://datadryad.org/api/v2
+  tags:
+  - reports
+  properties:
+  - type: OpenAPI
+    url: openapi/dryad-reports-api-openapi.yml
+  - type: Documentation
+    url: https://datadryad.org/api/v2/docs
+  - type: GitHubRepository
+    url: https://github.com/datadryad/dryad-app
+  - type: SubmissionGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+  - type: SearchGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+  - type: APIAccounts
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: DatasetMetadata
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
+- aid: dryad:dryad-root-api
+  name: Dryad root API
+  description: Root-level API calls
+  humanURL: https://datadryad.org/api/v2/docs
+  baseURL: https://datadryad.org/api/v2
+  tags:
+  - root
+  properties:
+  - type: OpenAPI
+    url: openapi/dryad-root-api-openapi.yml
+  - type: Documentation
+    url: https://datadryad.org/api/v2/docs
+  - type: GitHubRepository
+    url: https://github.com/datadryad/dryad-app
+  - type: SubmissionGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+  - type: SearchGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+  - type: APIAccounts
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: DatasetMetadata
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
+- aid: dryad:dryad-search-api
+  name: Dryad search API
+  description: Searching datasets
+  humanURL: https://datadryad.org/api/v2/docs
+  baseURL: https://datadryad.org/api/v2
+  tags:
+  - search
+  properties:
+  - type: OpenAPI
+    url: openapi/dryad-search-api-openapi.yml
+  - type: Documentation
+    url: https://datadryad.org/api/v2/docs
+  - type: GitHubRepository
+    url: https://github.com/datadryad/dryad-app
+  - type: SubmissionGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+  - type: SearchGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+  - type: APIAccounts
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: DatasetMetadata
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
+- aid: dryad:dryad-versions-api
+  name: Dryad versions API
+  description: Operations on individual versions of a dataset
+  humanURL: https://datadryad.org/api/v2/docs
+  baseURL: https://datadryad.org/api/v2
+  tags:
+  - versions
+  properties:
+  - type: OpenAPI
+    url: openapi/dryad-versions-api-openapi.yml
+  - type: Documentation
+    url: https://datadryad.org/api/v2/docs
+  - type: GitHubRepository
+    url: https://github.com/datadryad/dryad-app
+  - type: SubmissionGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md
+  - type: SearchGuide
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md
+  - type: APIAccounts
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+  - type: DatasetMetadata
+    url: https://github.com/datadryad/dryad-app/blob/main/documentation/apis/dataset_metadata.md
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/finops/finops.yml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-schema/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/json-ld/context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 common:
   - type: AgenticAccess
     url: agentic-access/dryad-agentic-access.yml
