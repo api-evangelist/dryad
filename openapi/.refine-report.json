@@ -1,0 +1,26 @@
+{
+  "provider": "dryad",
+  "sources": [
+    "dryad-datasets-api-openapi.yml",
+    "dryad-files-api-openapi.yml",
+    "dryad-internal-api-openapi.yml",
+    "dryad-reports-api-openapi.yml",
+    "dryad-root-api-openapi.yml",
+    "dryad-search-api-openapi.yml",
+    "dryad-versions-api-openapi.yml"
+  ],
+  "outputs": [
+    "dryad-datasets-api-openapi.yml",
+    "dryad-files-api-openapi.yml",
+    "dryad-internal-api-openapi.yml",
+    "dryad-reports-api-openapi.yml",
+    "dryad-root-api-openapi.yml",
+    "dryad-search-api-openapi.yml",
+    "dryad-versions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

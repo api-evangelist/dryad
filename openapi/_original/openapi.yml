@@ -1,0 +1,1683 @@
+openapi: 3.1.0
+
+info:
+  title: Dryad API
+  description: |
+    Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents. The most common case is to use GET requests to retrieve information about datasets, versions, and files.
+
+    When using the API, any DOI included must be <a href="https://www.w3schools.com/tags/ref_urlencode.ASP" target="blank">URL-encoded<i class="fas fa-arrow-up-right-from-square exit-icon" aria-label=" (opens in new window)" role="img"></i></a> to ensure correct processing. Anonymous users of the API are limited to 30 requests per minute, and are not allowed to download data files. 
+
+    Examples:
+
+    - [List datasets](https://datadryad.org/api/v2/datasets)
+    - [Search for datasets](https://datadryad.org/api/v2/search?q=carbon)
+    - [Get information about a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7)
+    - [List versions of a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7/versions)
+    - [List files in a version](https://datadryad.org/api/v2/versions/26724/files)
+
+    Detailed documentation:
+
+    - For details on all of our REST API operations, click the links in the menu on this page.
+    - [Search API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md)
+    - [Submission API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md)
+
+    ## API accounts 
+
+    To access more powerful features, an API account is required. API accounts allow users to:
+
+    - Access the API at higher rates (authenticated users may make up to 240 requests per minute)
+    - Download data files
+    - Access datasets that are not yet public, but are associated with the account's community (institution, journal, etc.)
+    - Update datasets associated with the account's community
+
+    See the <a href="https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md" target="blank">API accounts document<i class="fas fa-arrow-up-right-from-square exit-icon" aria-label=" (opens in new window)" role="img"></i></a> for more information on requesting an API account and using it to access datasets.
+
+
+    ## Submission
+
+    The Submission API is used by organizations that partner closely with Dryad, and use systems to create dataset submissions directly. Please contact us if you are [interested in partnering with Dryad](/contact#get-involved), and setting up an API account for submission.
+
+    The <a href="https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md" target="blank">API submission examples document<i class="fas fa-arrow-up-right-from-square exit-icon" aria-label=" (opens in new window)" role="img"></i></a> gives concrete examples of submission through the Dryad API.
+
+
+    ### Dryad sandbox
+
+    <a href="https://sandbox.datadryad.org/" target="blank">Dryad's sandbox server<i class="fas fa-arrow-up-right-from-square exit-icon" aria-label=" (opens in new window)" role="img"></i></a> allows users to experiment with data submission and the Dryad API, without worrying about the effects on "real" data. Anyone may create an account on the sandbox server for testing purposes. When creating an account, keep in mind that Dryad's sandbox relies on the <a href="https://sandbox.orcid.org/" target="_blank">sandbox version of ORCID<i class="fas fa-arrow-up-right-from-square exit-icon" aria-label=" (opens in new window)" role="img"></i></a>, which allows you to make test ORCID accounts. Sandbox ORCID IDs should be used in the Dryad sandbox, while use of Dryad's production system requires a real ORCID ID.
+
+  version: "2.1.0"
+
+servers:
+  - url: https://datadryad.org/api/v2
+    description: Main Dryad server
+  - url: https://sandbox.datadryad.org/api/v2
+    description: Sandbox server, for testing new features.
+
+tags:
+    - name: root
+      description: Root-level API calls
+    - name: search
+      description: Searching datasets
+    - name: datasets
+      description: Dataset operations
+    - name: versions
+      description: Operations on individual versions of a dataset
+    - name: files
+      description: Operations on individual files of a dataset
+    - name: reports
+      description: Reports on content in Dryad
+    - name: internal
+      description: Internal APIs not of general interest to the public
+    
+paths:
+  # --- root uri ----
+  /:
+    get:
+      summary: The root of the API
+      tags:
+        - root 
+      description: Displays links to root level API objects, like the list of datasets.
+      responses:
+        '200':
+          description: The root of the API.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/root_links'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/root.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+
+  # --- test for bearer authentication ---
+  /test:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Test OAuth2 and bearer authentication
+      tags:
+        - root 
+      description: "Test your <a href='https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md'>API account authentication</a> by sending authenticated headers:  `Accept: application/json`, `Content-Type: application/json`, `Authorization: Bearer {your-token}`. \n\n `Accept` header is optional if you are using `Content-Type: application/json`."
+
+      responses:
+        '200':
+          description: Shows a welcome message if successful.
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome Brenda Ngrulu"
+                  user_id:
+                    type: integer
+                    example: 10
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # --- datasets uris ---
+  /datasets:
+    get:
+      summary: Get a list of all datasets
+      tags:
+        - datasets 
+      description: The items returned may depend on user permissions, and are paged.
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/publicationISSN'
+        - $ref: '#/components/parameters/publicationName'
+        - $ref: '#/components/parameters/manuscriptNumber'
+        - $ref: '#/components/parameters/curationStatus'
+      responses:
+        '200':
+          description: A list of datasets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/datasets'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/datasets.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+    post:
+      summary: Create a new dataset with an automatically-generated DOI
+      tags:
+        - datasets 
+      description: 
+        You must be <a href="https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md">logged in</a>. Use a JSON structure as shown below.
+
+
+        If no funders are declared, users will be asked to list them later; to declare no funding submit a funder with <code>identifier&#x0003A; '0'</code> (see the "Set no funding" example). If human subject information is in the dataset, include a statement explaining how the data was de-identified (see the 'Include HSI statement' example).
+
+
+        For a more full list of properties that can be sent, check the Model below and the <a href="https://github.com/datadryad/dryad-app/blob/main/documentation/apis/sample_dataset.json" target="_blank">sample dataset object</a>.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/dc_metadata'
+                - $ref: '#/components/schemas/admin_values'
+            examples:
+              Post:
+                $ref: api/v2/docs/examples/dataset_post_request.json
+              Include journal information:
+                $ref: api/v2/docs/examples/dataset_post_request_jr.json
+              Set no funding:
+                $ref: api/v2/docs/examples/dataset_post_request_nf.json
+              Include HSI statement:
+                $ref: api/v2/docs/examples/dataset_post_request_hsi.json
+      responses:
+        '201':
+          description: Show the dataset information that has been saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/datasets'
+              examples:
+                Success:
+                  $ref: api/v2/docs/examples/dataset_post_response.json
+                With journal:
+                  $ref: api/v2/docs/examples/dataset_post_response_jr.json
+                Without funding:
+                  $ref: api/v2/docs/examples/dataset_post_response_nf.json
+                With HSI statement:
+                  $ref: api/v2/docs/examples/dataset_post_response_hsi.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  '/datasets/{doi}':
+    get:
+      summary: Get a dataset record by its DOI
+      tags:
+        - datasets 
+      description: 
+        Be sure to URL encode the DOI (see example below). Datasets that are not yet published are only 
+        retrievable by users with permission to access them.
+      parameters:
+        - $ref: '#/components/parameters/doi'
+      responses:
+        '200':
+          description: Dataset information retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataset'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/dataset.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      summary: Update (overwrite) dataset metadata for DOI
+      tags:
+        - datasets 
+      description: This will overwrite writeable metadata for an in-progress dataset.  This is an insert or update action (upsert). Be sure to URL encode the DOI (see example below). You must be <a href="https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md">logged in</a>. Use a JSON structure as shown below. For a more full list of properties that can be sent, check the Schema below and the <a href="https://github.com/datadryad/dryad-app/blob/main/documentation/apis/sample_dataset.json" target="_blank">sample dataset object</a>.
+      parameters:
+        - $ref: '#/components/parameters/doi'
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/dc_metadata'
+                - properties:
+                    identifier:
+                      type: string
+                      description: The Dryad dataset DOI
+                - $ref: '#/components/schemas/admin_values'
+            examples:
+              success:
+                $ref: api/v2/docs/examples/dataset_post_request.json
+      responses:
+        '200':
+          description:  Show the dataset information that has been saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/datasets'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/dataset.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    patch:
+      parameters:
+        - $ref: '#/components/parameters/doi'
+      security:
+        - bearerAuth: []
+      summary: Update the state of an in-progress dataset
+      tags:
+        - datasets 
+      description: "Sending a JSON patch request whose JSON body looks like **[ { 'op': 'replace', 'path': '/versionStatus', 'value': 'submitted' } ]**. (This is the most common command, attempting to change the versionStatus to 'submitted'.) Other options are available that are useful for integration with manuscript processing systems. See the [embedded Dryad documentation](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/embedded_submission.md) for details. Set http header **'Content-Type: application/json-patch+json'** when making the request instead of a standard json content-type."
+      requestBody:
+        description: JSON Patch object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/dataset_submission'
+      responses:
+        '202':
+          description: Submission taking place, watch the dataset versionStatus for changes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataset'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/dataset.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: 
+                error: 'Your dataset cannot be updated now'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  '/datasets/{doi}/download':
+    get:
+      summary: Get a download package for a dataset
+      tags:
+        - datasets 
+      description: This downloads the zip package of the latest submitted version of the dataset that is visible to the user (or public).
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/doi'
+      responses:
+        '200':
+          description: The binary content for a compressed archive.
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/datasets/{doi}/versions':
+    get:
+      summary: Show all versions of a dataset
+      tags:
+        - datasets 
+      description: The <code>/versions</code> endpoint lists all versions visible to the user (or public). This is in contrast to GETting the datasets endpoint for a DOI, since it only embeds metadata for the latest visible version.
+      parameters:
+        - $ref: '#/components/parameters/doi'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      responses:
+        '200':
+          description: A list of a dataset's versions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/versions'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/versions.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # --- versions uris ---
+  '/versions/{id}':
+    get:
+      summary: Show a specific dataset version
+      tags:
+        - versions
+      description: "If you know the dataset version's internal id, you can request its record directly. The <code>/versions</code> endpoint lists the versions of a dataset and their ids."
+      parameters:
+        - $ref: '#/components/parameters/version_id'
+      responses:
+        '200':
+          description: The requested version of the dataset.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/version'
+                  - properties:
+                      changedFields: 
+                        type: array
+                        items: 
+                          type: string
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/version.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/versions/{id}/files':
+    get:
+      summary: List the files and file metadata in this version
+      tags:
+        - versions
+      description: Returns the list of files and file metadata for a known version of a dataset with the version ID you specify.
+      parameters:
+        - $ref: '#/components/parameters/version_id'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      responses:
+        '200':
+          description: A list of the files in the version.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/files'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/files.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/versions/{id}/download':
+    get:
+      summary: Get a download package for a dataset version
+      tags:
+        - versions
+      description: This downloads the zip package of a specified, submitted version of the dataset that is visible to the user (or public).
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/version_id'
+      responses:
+        '200':
+          description: The binary content for a compressed archive.
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: 
+                error: 'not found'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  '/files/{id}':
+    get:
+      summary: Get metadata information about a file
+      tags:
+        - files
+      description: Returns file metadata information visible to the user (or public) by the file ID.  The version file list embeds this metadata and also lists the file IDs.
+      parameters:
+        - $ref: '#/components/parameters/file_id'
+      responses:
+        '200':
+          description: A single file.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/file'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/file.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/file_id'
+      summary: Remove a file from an in-progress dataset version
+      tags:
+        - files
+      description: "This action only works on an in-progress dataset (this means that the latest version of a dataset associated with this file has to be in-progress). It will destroy the metadata and file if it's a staged file that hasn't been submitted to the repository yet.  If the file was submitted previously in an earlier version of the same dataset it will stage removal from the in-progress dataset version.  In order to finalize staged file changes into the storage repository, the in-progress dataset must be submitted again after all changes are ready."
+      responses:
+        '201':
+          description: The file and metadata was removed from staging.  Or the file and metadata was staged for removal from this version.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/file'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/file.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: 
+                error: This file must be part of an an in-progress version.
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/files/{id}/download':
+    get:
+      summary: Download a specific file
+      tags:
+        - files
+      description: Only files that have been stored in the storage repository may be downloaded (and ability to download may depend on the user).  Versions of a dataset still in-progress only have staged files that may not be downloaded until they have been submitted to the storage repository.
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/file_id'
+      responses:
+        '200':
+          description: The binary content of the file downloads as the http body.  The "Content-Type" and "Content-Disposition" headers will be set to reflect the file content-type and filename when downloading (following http standards).
+          content:
+            "*/*":
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # --- upload a file in body with filename in url ---
+  '/datasets/{doi}/files/{filename}':
+    put:
+      summary: Upload and stage a file for an in-progress dataset
+      tags:
+        - files
+      description: Allows uploading a file to be staged for submission to the storage repository. The files will be stored in the storage repository after the dataset is submitted.  The body of the request will be the file you are uploading.  Set the `Content-Type` http header to the appropriate mimetype for your file when uploading.
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/doi'
+        - $ref: '#/components/parameters/filename'
+      requestBody:
+        description: A binary file with `Content-Type` set.
+        required: true
+        content:
+          "*/*":
+            schema:
+              type: string
+              format: binary
+      responses:
+        '201':
+          description: File was created on the server.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/file'
+                - properties:
+                    url:
+                      type: string
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/upload_file.json
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/datasets/{doi}/urls':
+    post:
+      summary: Stage a file submission by URL
+      tags:
+        - files
+      description: "The URL you specify will be deposited into the storage repository from a publicly accessible URL on the internet when the in-progress dataset is submitted.  The dataset must be an in-progress dataset. The URL will be validated and metadata about it obtained to populate metadata about the file when it is added.  Send the url to be retrieved as part of a JSON document like **{'url': 'http://example.org/testing/my/file.csv' }**.  Priviliged users may have additional options to specify URL metadata rather than having live-validation and metadata gathering performed from the Internet."
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/doi'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/url_json'
+      responses:
+        '201':
+          description: Metadata for the URL was saved and the response JSON indicates information populated for a file object based on the URL.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/file'
+                - properties:
+                    url:
+                      type: string
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/upload_file.json
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # --- internal ---
+  '/processor_results/{id}':
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Get processor results for the ID given
+      tags:
+        - internal
+      description: Shows the processor results stored in the database for the given ID.
+      parameters:
+        - $ref: '#/components/parameters/processor_result_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_result'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      security:
+        - bearerAuth: [ ]
+      summary: Overwrite processor results for the ID given
+      tags:
+        - internal
+      description: Overwrite the processor results stored in the database for the given ID, resource_id, dates can't be manually changed
+      parameters:
+        - $ref: '#/components/parameters/processor_result_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results that were saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_result'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/versions/{version_id}/processor_results':
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Get processor results for the version given
+      tags:
+        - internal
+      description: Shows the processor results stored in the database for the resource_id
+      parameters:
+        - $ref: '#/components/parameters/version_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results for the version ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_results'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Create processor results for the ID given
+      tags:
+        - internal
+      description: Create a new processor result in the database.
+      parameters:
+        - $ref: '#/components/parameters/processor_result_id'
+      responses:
+        '200':
+          description: A JSON representation of processor results that were saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processor_result'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/datasets/{doi}/related_works/{related_doi}':
+    put:
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/related_type'
+      summary: Update related works for a Dryad DOI
+      tags:
+        - internal
+      description: Adds or updates related works for a Dryad DOI.
+      parameters:
+        - $ref: '#/components/parameters/doi'
+        - $ref: '#/components/parameters/doi'
+      responses:
+        '200':
+          description: A JSON representation of the related work that was saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/relatedWork'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # --- reports ---
+  /reports:
+    get:
+      summary: Get a list of reports that are updated regularly
+      tags:
+        - reports
+      responses:
+        '200':
+          description: A list of reports URLs.
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/reports'
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+
+  '/reports/{name}':
+    get:
+      summary: Get a particular report
+      tags:
+        - reports
+      parameters:
+        - in: path
+          name: name
+          schema:
+            type: string
+          required: true
+          description: The name of a report.
+      responses:
+        '200':
+          description: A report (CSV download)
+          examples:
+          content:
+            text/csv:
+              schema:
+                type: string
+        '406':
+          $ref: '#/components/responses/Unacceptable'
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: 
+                error: Unable to render report file.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: 
+                error: Could not find requested report {name}.
+
+  # --- search ---
+  /search:
+    get:
+      summary: Search publicly-available datasets
+      tags:
+        - search
+      description: Search the published Dryad datasets. Query all fields, or look for terms in specific metadata fields of the dataset.
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description:
+            A list of terms to be searched. If multiple terms are
+            supplied, matches will only be returned for items that contain
+            all terms. Terms may include an `*` at the end to indicate a
+            wildcard. A term may be negated to indicate that it should *not*
+            be present in the results (e.g., `cat -fish`). Use quotation marks to search for an exact phrase.
+        - in: query
+          name: subject
+          schema:
+            type: string
+          description: Search for a dataset by subject keyword.
+        - in: query
+          name: orcid
+          schema:
+            type: string
+          description: Search for authors using author [ORCIDs](https://orcid.org/). If multiple, separate with a space.
+        - in: query
+          name: author
+          schema:
+            type: string
+          description: Search for authors by name.
+        - in: query
+          name: affiliation
+          schema:
+            type: string
+          description:
+            A ROR identifier for an institutional
+            affiliation that must be present in the list of dataset authors. The
+            identifier should be in the full "https" format and should be
+            URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`.
+        - in: query
+          name: facility
+          schema:
+            type: string
+          description:
+            A ROR identifier for the dataset research facility. The
+            identifier should be in the full "https" format and should be
+            URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`.
+        - in: query
+          name: funder
+          schema:
+            type: string
+          description:
+            A ROR identifier for a dataset funder. The
+            identifier should be in the full "https" format and should be
+            URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`.
+        - in: query
+          name: org
+          schema:
+            type: string
+          description:
+            A ROR identifier for a dataset funder, affiliation, or research facility. The
+            identifier should be in the full "https" format and should be
+            URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`.
+        - in: query
+          name: tenant
+          schema:
+            type: string
+          description:
+            The abbreviation for a partner organization in
+            Dryad. This will automatically search all organizations associated with the given tenant.
+        - in: query
+          name: award
+          schema:
+            type: string
+          description: An award or grant number associated with the dataset.
+        - in: query
+          name: journalISSN
+          schema:
+            type: string
+          description:
+            The journal ISSN.
+        - in: query
+          name: relatedId
+          schema:
+            type: string
+          description:
+            Any related work ID associated with the dataset, including manuscript numbers and PubMed IDs.
+        - in: query
+          name: publishedSince
+          schema:
+            type: string
+          description:
+            A date or timestamp for limiting results. Datasets will only be returned that have been published since the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`.
+        - in: query
+          name: publishedBefore
+          schema:
+            type: string
+          description:
+            A date or timestamp for limiting results. Datasets will only be returned that have been published before the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`.
+        - in: query
+          name: relatedWorkIdentifier
+          schema:
+            type: string
+          description:
+            A DOI or other URL that links a dataset to a related work. It allows `*` as a wildcard at the beginning and/or end of the value.
+        - in: query
+          name: relatedWorkRelationship
+          schema:
+            type: string
+          description:
+            The type of relationship expressed by a related work.
+        - in: query
+          name: modifiedSince
+          schema:
+            type: string
+          description:
+            A date or timestamp for limiting results. Datasets will only be returned that have been modified since the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`.
+        - in: query
+          name: modifiedBefore
+          schema:
+            type: string
+          description:
+            A date or timestamp for limiting results. Datasets will only be returned that have been modified before the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`.
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+        
+      responses:
+        '200':
+          description: A list of datasets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/datasets'
+              examples:
+                success:
+                  $ref: api/v2/docs/examples/datasets.json
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: 
+                error: Dryad encountered an error parsing the query options for the search. The most likely cause of this problem is an improperly-formatted timestamp for the `modifiedSince` parameter.
+
+# ------------------
+# --- components ---
+# ------------------
+components:
+  
+  responses:
+
+    Unacceptable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: 
+            error: "406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`."
+
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: 
+            error: "400 - Bad Request"
+
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: 
+            error: 'Not Found'
+
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: 
+            error: Unauthorized, must have current bearer token.
+
+    unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: 
+            error: unauthorized
+
+    UnprocessableEntity:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: 
+            error: "422 - Unprocessable Content: the server understood the content type of the request, and the syntax of the request content was correct, but it was unable to process the contained instructions.\n\nExample: _A dataset with same information already exists._"
+
+  schemas:
+    # --- root ---
+    root:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/root_links'
+      required:
+        - _links
+
+    root_links:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
+        "stash:datasets":
+          $ref: '#/components/schemas/hal_link'
+        "reports":
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+      required:
+        - self
+
+    # --- Dataset(s) ---
+
+    # plural
+    datasets:
+      allOf:
+        - $ref: '#/components/schemas/hal_paged_response'
+        - $ref: '#/components/schemas/embedded_datasets'
+
+    embedded_datasets:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            'stash:datasets':
+              type: array
+              items:
+                $ref: '#/components/schemas/dataset'
+
+    #singular
+    dataset:
+      allOf:        
+        - properties:
+            identifier:
+              type: string
+            id:
+              type: integer            
+            storageSize:
+              type: integer
+            relatedPublicationISSN:
+              type: string
+        - $ref: '#/components/schemas/version'
+        - $ref: '#/components/schemas/dataset_links'
+        - properties:
+            metrics: 
+              type: object
+              properties:
+                views:
+                  type: integer
+                downloads:
+                  type: integer
+                citations:
+                  type: integer
+            license:
+              type: string
+              description: 'The license of the dataset'
+
+    dataset_links:
+      properties:
+        _links:
+          allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_dataset_links'
+
+    hal_dataset_links:
+      properties:
+        'stash:versions':
+          $ref: '#/components/schemas/hal_link'
+        'stash:version':
+          $ref: '#/components/schemas/hal_link'
+        'stash:download':
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+
+    dataset_submission:
+      properties:
+        op:
+          type: string
+          enum: ['replace']
+          example: replace
+        path:
+          type: string
+          enum: ['/versionStatus', '/curationStatus', 'publicationISSN']
+          example: "/versionStatus"
+        value:
+          type: string
+          oneOf:
+            - title: "/versionStatus"
+              enum: ['in_progress', 'processing', 'submitted']
+            - title: "/curationStatus"
+              enum: ['queued', 'submitted', 'peer_review', 'curation', 'action_required', 'withdrawn']
+            - title: "/publicationISSN"
+          example: queued
+
+    # --- Version(s) ---
+    # plural
+    versions:
+      allOf:
+        - $ref: '#/components/schemas/hal_paged_response'
+        - $ref: '#/components/schemas/embedded_versions'
+
+    embedded_versions:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            'stash:versions':
+              type: array
+              items:
+                $ref: '#/components/schemas/version'
+
+    # singular
+    version:
+      allOf:
+        - $ref: '#/components/schemas/version_links'
+        - $ref: '#/components/schemas/dc_metadata'
+        - properties:
+            versionNumber:
+              type: integer
+            versionStatus:
+              type: string
+              enum: ['in_progress', 'processing', 'submitted']              
+              description: Internal processing status of files.
+            curationStatus:
+              type: string
+              enum: [In progress, Processing, Queued for curation, Private for Peer Review, Awaiting payment, Curation, Action required, Withdrawn, Embargoed, Published]
+              description: Status of the submission in the curation workflow.
+            versionChanges:
+              type: string
+              enum: [files_changed, metadata_changed]
+            publicationDate:
+              type: string
+            lastModificationDate:
+              type: string
+            visibility:
+              type: string
+              description: Whether or not this version is publicly visible.
+
+    version_links:
+      properties:
+        _links:
+          allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_version_links'
+
+    hal_version_links:
+      properties:
+        'stash:dataset':
+          $ref: '#/components/schemas/hal_link'
+        'stash:files':
+          $ref: '#/components/schemas/hal_link'
+        'stash:download':
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+
+    simple_version:
+      allOf:
+        - $ref: '#/components/schemas/dc_metadata'
+
+    # --- file(s) ---
+
+    # plural
+    files:
+      allOf:
+        - $ref: '#/components/schemas/hal_paged_response'
+        - $ref: '#/components/schemas/embedded_files'
+
+    embedded_files:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            'stash:files':
+              type: array
+              items:
+                $ref: '#/components/schemas/file'
+
+    # singular
+    file:
+      allOf:
+        - $ref: '#/components/schemas/file_links'
+        - properties:
+            path:
+              type: string
+            size:
+              type: integer
+            mimeType:
+              type: string
+            status:
+              type: string
+            digest:
+              type: string
+            digestType:
+              type: string
+            description:
+              type: string
+
+    file_links:
+      properties:
+        _links:
+          allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_file_links'
+
+    # singular
+    processor_result:
+      allOf:
+        - properties:
+            id:
+              type: integer
+              example: 27
+            resource_id:
+              type: integer
+              example: 48
+            processing_type:
+              type: string
+              enum: ['excel_to_csv', 'compressed_info', 'frictionless']
+              example: excel_to_csv
+            parent_id:
+              type: integer
+              example: 747
+            completion_state:
+              type: string
+              enum: ['not_started', 'processing', 'success', 'error']
+              example: success
+            message:
+              type: string
+              example: Completed processing with no errors.
+            structured_info:
+              type: string
+              example: "{\"cat\": \"dog\"}"
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+
+    processor_results:
+      type: array
+      items:
+        $ref: '#/components/schemas/processor_result'
+
+    # singular
+    url:
+      properties:
+        url:
+          type: string
+
+    hal_file_links:
+      properties:
+        'stash:dataset':
+          $ref: '#/components/schemas/hal_link'
+        'stash:version':
+          $ref: '#/components/schemas/hal_link'
+        'stash:files':
+          $ref: '#/components/schemas/hal_link'
+        'stash:download':
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+
+    dc_metadata:
+      type: object
+      properties:
+        title:
+          type: string
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/author'
+        abstract:
+          type: string
+          description: An abstract introducing the dataset.
+        funders:
+          type: array
+          items:
+            $ref: '#/components/schemas/funder'
+        keywords:
+          type: array
+          items:
+            type: string
+        fieldOfScience:
+          type: string
+          description: A term from the FOS (Fields of Science and Technology) controlled vocabulary. The main category of the dataset.
+        hsiStatement:
+          type: string
+          description: A statement explaining the de-identification of any human subject data in the dataset.
+        methods:
+          type: string
+          description: The methods by which the data was produced. Not required for publication.
+        usageNotes:
+          type: string
+          description: Usage notes for the dataset (Deprecated; It is preferred for this content to appear in the README file for the dataset). If the dataset has been retracted, the retraction statement will appear here.
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/geolocation'
+        relatedWorks:
+          type: array
+          items:
+            $ref: '#/components/schemas/relatedWork'
+      required:
+        - title
+        - authors
+        - abstract
+
+    admin_values:
+      properties:
+        userId:
+          type: string
+          description: The Dryad user ID, or ORCID iD, of the user who will submit the dataset. If this is unknown, the userId must be set to `0` to allow for an invitation link.
+        publicationISSN:
+          type: string
+          description: An ISSN for the associated journal
+        publicationName:
+          type: string
+          description: The title of the associated journal
+        manuscriptNumber:
+          type: string
+          description: The internal manuscript number assigned to an associated article before publication
+        skipEmails: 
+          type: boolean
+          default: false
+          description: Administrator value. Prevents emails being sent automatically.
+        triggerSubmitInvitation:
+          type: boolean
+          default: false
+          description: Administrator value. Sends an editing invitation email to the first author.
+        preserveCurationStatus:
+          type: boolean
+          default: false
+          description: Administrator value. Prevents automatic curation status changes.
+        holdForPeerReview:
+          type: boolean
+          default: false
+          description: Administrator value. Sets whether the submission will be sent to curation or a peer review hold status. 
+        loosenValidation:
+          type: boolean
+          default: false
+          description: For superusers only.
+        skipDataciteUpdate:
+          type: boolean
+          default: false
+          description: For superusers only.
+        invoiceId:
+          type: string
+          description: For superusers only.
+
+    author:
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        affiliation:
+          type: string
+        affiliationROR:
+          type: string
+          description: Preferred identifier for the author affiliation.
+        affiliations:
+          type: array
+          items:
+            name: string
+            ror_id: string
+        affiliationISNI:
+          type: string
+        orcid:
+          type: string
+        order:
+          type: integer
+    simple_author:
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        affiliation:
+          type: string
+    funder:
+      properties:
+        organization:
+          type: string
+        identifier:
+          type: string
+          description: The organization identifier, for example a ROR ID.
+          example: 'https://ror.org/00x6h5n95'
+        identifierType:
+          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
+          type: string
+          example: ror
+        awardNumber:
+          type: string
+        awardDescription:
+          description: Usually used for the program or the division of the award.
+          type: string
+        order:
+          type: integer
+    relatedWork:
+      properties:
+        relationship:
+          format: string
+          enum: [ 'article', 'dataset', 'preprint', 'software', 'supplemental_information', 'primary_article', 'data_management_plan' ]
+        identifierType:
+          type: string
+        identifier:
+          type: string
+    geolocation:
+      properties:
+        place:
+          description: A place name.
+          type: string
+        box:
+          $ref: '#/components/schemas/geolocationBox'
+          description: A bounding box.
+        point:
+          $ref: '#/components/schemas/geolocationPoint'
+          description: A coordinate point.
+    geolocationBox:
+      properties:
+        swLongitude:
+          description: The longitude of the southwest corner of the box.
+          type: number
+        swLatitude:
+          description: The latitude of the southwest corner of the box.
+          type: number
+        neLongitude:
+          description: The longitude of the northeast corner of the box.
+          type: number
+        neLatitude:
+          description: The latitude of the northeast corner of the box.
+          type: number
+    geolocationPoint:
+      type: object
+      properties:
+        latitude:
+          description: The latitude of the point.
+          type: number
+        longitude:
+          description: The longitude of the point.
+          type: number
+    embargo:
+      type: object
+      properties:
+        embargoEndDate:
+          format: date
+          description: The end date of the embargo, after which the dataset will become public.
+          type: string
+    tenant:
+      type: object
+      description: Information about the <a href="https://datadryad.org/join_us">Dryad member</a> associated with the dataset.
+      properties:
+        id:
+          format: string
+        abbreviation:
+          format: string
+        shortName:
+          format: string
+        longName:
+          format: string
+        domainName:
+          format: string
+    related_type:
+      type: object
+      properties:
+        work_type:
+          format: string
+          enum: [ 'article', 'dataset', 'preprint', 'software', 'supplemental_information', 'primary_article', 'data_management_plan' ]
+          example: article
+
+    # --- Non-dataset APIs -- #
+    reports:
+      properties:
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/hal_link'
+            reports:
+              type: array
+              items:
+                $ref: '#/components/schemas/hal_link'
+            curies:
+              type: array
+              items:
+                $ref: '#/components/schemas/hal_curie'
+
+    # --- specific link section for different resources ---
+
+
+    # --- generic linking methods that give links for boilerplate junk used everywhere ---
+    # TODO: hal_links should be purged because it's too generic and doesn't express real link structure
+    hal_links:
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+      required:
+        - self
+
+    hal_self_link:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
+
+    hal_page_links:
+      properties:
+        first:
+          $ref: '#/components/schemas/hal_link'
+        last:
+          $ref: '#/components/schemas/hal_link'
+        prev:
+          $ref: '#/components/schemas/hal_link'
+        next:
+          $ref: '#/components/schemas/hal_link'
+
+    paging_counts:
+      properties:
+        count:
+          type: integer
+        total:
+          type: integer
+
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+        - href
+
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+        - name
+        - href
+        - templated
+
+    hal_paged_response:
+      allOf:
+        - properties:
+            _links:
+              allOf:
+                - $ref: '#/components/schemas/hal_self_link'
+                - $ref: '#/components/schemas/hal_page_links'
+        - $ref: '#/components/schemas/paging_counts'
+
+    url_json:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+        - url
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+
+
+  # parameters for going into URLs (and json?)
+  parameters:
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+
+    version_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: "The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+
+    processor_result_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: "The processor results ID for a single item."
+
+    file_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: "The file ID is a unique integer and can be obtained from the list of files for a version of a dataset."
+
+    filename:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: "The filename is the filename for the file. It should be escaped in the URL (for example 'cat tundra.jpg' would be 'cat%20tundra.jpg'.  Your programming language will have a library to encode for you."
+
+    page:
+      in: query
+      name: page
+      schema:
+        type: integer
+      description:
+        Which page of results to view. Defaults to page 1.
+
+    per_page:
+      in: query
+      name: per_page
+      schema:
+        type: integer
+      description:
+        Number of results to return on each page. Defaults
+        to 20. Maximum allowed is 100.
+
+    publicationISSN:
+      in: query
+      name: publicationISSN
+      schema:
+        type: string
+      description:
+        ISSN of a journal associated with the datasets.
+
+    publicationName:
+      in: query
+      name: publicationName
+      schema:
+        type: string
+      description:
+        ISSN of a journal associated with the datasets.
+
+    manuscriptNumber:
+      in: query
+      name: manuscriptNumber
+      schema:
+        type: string
+      description:
+        Manuscript number associated with the dataset.
+
+    curationStatus:
+      in: query
+      name: curationStatus
+      schema:
+        type: string
+      description:
+        Curation Status
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
