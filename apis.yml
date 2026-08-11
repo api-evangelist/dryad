@@ -285,6 +285,11 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 common:
+  - type: Releases
+    url: https://github.com/datadryad/dryad-app/releases
+  - type: License
+    name: MIT
+    url: https://github.com/datadryad/dryad-app/blob/main/LICENSE
   - type: AgenticAccess
     url: agentic-access/dryad-agentic-access.yml
   - type: DomainSecurity
