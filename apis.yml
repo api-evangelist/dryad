@@ -23,7 +23,7 @@ tags:
   - Ecology
   - Open Access
 url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/apis.yml
-specificationVersion: "0.19"
+specificationVersion: '0.23'
 apis:
 - aid: dryad:dryad-datasets-api
   name: Dryad datasets API
