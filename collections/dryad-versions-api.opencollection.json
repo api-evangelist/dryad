@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dryad datasets versions API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Show a specific dataset version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/versions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+              }
+            ]
+          },
+          "docs": "If you know the dataset version's internal id, you can request its record directly. The <code>/versions</code> endpoint lists the versions of a dataset and their ids."
+        },
+        {
+          "info": {
+            "name": "List the files and file metadata in this version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/versions/:id/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Which page of results to view. Defaults to page 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return on each page. Defaults to 20. Maximum allowed is 100."
+              }
+            ]
+          },
+          "docs": "Returns the list of files and file metadata for a known version of a dataset with the version ID you specify."
+        },
+        {
+          "info": {
+            "name": "Get a download package for a dataset version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/versions/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This downloads the zip package of a specified, submitted version of the dataset that is visible to the user (or public)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,730 @@
+{
+  "item": [
+    {
+      "id": "1fb2f92f-ad21-48e1-94a9-9a9500795585",
+      "name": "versions",
+      "description": {
+        "content": "Operations on individual versions of a dataset",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a9787bee-33c6-4f80-b4fc-4e9740e9626f",
+          "name": "Show a specific dataset version",
+          "request": {
+            "name": "Show a specific dataset version",
+            "description": {
+              "content": "If you know the dataset version's internal id, you can request its record directly. The <code>/versions</code> endpoint lists the versions of a dataset and their ids.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "versions",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1246669-1d0c-4b5c-b1cf-fbbdd71cd498",
+              "name": "The requested version of the dataset.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"Error reading api/v2/docs/examples/version.json. Can only use references from components and paths\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df2765bb-4cde-4df7-b1c7-38984bfdd76a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized, must have current bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77df8a41-7af2-4c70-9aef-cd961df5ec53",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02051d9b-5a42-4210-8ee7-f8561847823d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4d1e6f6-1385-420a-854d-4364dc026cbc",
+          "name": "List the files and file metadata in this version",
+          "request": {
+            "name": "List the files and file metadata in this version",
+            "description": {
+              "content": "Returns the list of files and file metadata for a known version of a dataset with the version ID you specify.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "versions",
+                ":id",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Which page of results to view. Defaults to page 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "Number of results to return on each page. Defaults to 20. Maximum allowed is 100."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "194fdef6-6d1c-45db-a45e-ae703e62c5da",
+              "name": "A list of the files in the version.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"Error reading api/v2/docs/examples/files.json. Can only use references from components and paths\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e9380e2-432c-4887-8a05-b0089f3f3390",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized, must have current bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56ad29d6-7185-44fe-a372-9d65897d6978",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e962acd8-bc2d-470e-b372-998faddf0a2e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96c26a33-cec4-4b23-aebd-ed121eb26a1f",
+          "name": "Get a download package for a dataset version",
+          "request": {
+            "name": "Get a download package for a dataset version",
+            "description": {
+              "content": "This downloads the zip package of a specified, submitted version of the dataset that is visible to the user (or public).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "versions",
+                ":id",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "73525cf2-7fd5-4c49-99eb-2ff74a903bea",
+              "name": "The binary content for a compressed archive.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f0a7f443-34e2-4e07-b6a0-c68b4e77168a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized, must have current bearer token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7874d76-f2fa-4db0-baed-5740a1892a3b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "versions",
+                    ":id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The version ID is a unique integer and can be obtained from the list of versions for a dataset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://datadryad.org/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "66ecdf43-f8b2-4b60-af6c-8b6e564cd139",
+    "name": "Dryad datasets versions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents. The most common case is to use GET requests to retrieve information about datasets, versions, and files.\n\nWhen using the API, any DOI included must be <a href=\"https://www.w3schools.com/tags/ref_urlencode.ASP\" target=\"blank\">URL-encoded<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> to ensure correct processing. Anonymous users of the API are limited to 30 requests per minute, and are not allowed to download data files. \n\nExamples:\n\n- [List datasets](https://datadryad.org/api/v2/datasets)\n- [Search for datasets](https://datadryad.org/api/v2/search?q=carbon)\n- [Get information about a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7)\n- [List versions of a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7/versions)\n- [List files in a version](https://datadryad.org/api/v2/versions/26724/files)\n\nDetailed documentation:\n\n- For details on all of our REST API operations, click the links in the menu on this page.\n- [Search API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md)\n- [Submission API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md)\n\n## API accounts \n\nTo access more powerful features, an API account is required. API accounts allow users to:\n\n- Access the API at higher rates (authenticated users may make up to 240 requests per minute)\n- Download data files\n- Access datasets that are not yet public, but are associated with the account's community (institution, journal, etc.)\n- Update datasets associated with the account's community\n\nSee the <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\" target=\"blank\">API accounts document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> for more information on requesting an API account and using it to access datasets.\n\n\n## Submission\n\nThe Submission API is used by organizations that partner closely with Dryad, and use systems to create dataset submissions directly. Please contact us if you are [interested in partnering with Dryad](/contact#get-involved), and setting up an API account for submission.\n\nThe <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md\" target=\"blank\">API submission examples document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> gives concrete examples of submission through the Dryad API.\n\n\n### Dryad sandbox\n\n<a href=\"https://sandbox.datadryad.org/\" target=\"blank\">Dryad's sandbox server<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> allows users to experiment with data submission and the Dryad API, without worrying about the effects on \"real\" data. Anyone may create an account on the sandbox server for testing purposes. When creating an account, keep in mind that Dryad's sandbox relies on the <a href=\"https://sandbox.orcid.org/\" target=\"_blank\">sandbox version of ORCID<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a>, which allows you to make test ORCID accounts. Sandbox ORCID IDs should be used in the Dryad sandbox, while use of Dryad's production system requires a real ORCID ID.\n",
+      "type": "text/plain"
+    }
+  }
+}

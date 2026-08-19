@@ -1,0 +1,213 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dryad datasets API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "datasets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of all datasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/datasets",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Which page of results to view. Defaults to page 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return on each page. Defaults to 20. Maximum allowed is 100."
+              },
+              {
+                "name": "publicationISSN",
+                "value": "",
+                "type": "query",
+                "description": "ISSN of a journal associated with the datasets."
+              },
+              {
+                "name": "publicationName",
+                "value": "",
+                "type": "query",
+                "description": "ISSN of a journal associated with the datasets."
+              },
+              {
+                "name": "manuscriptNumber",
+                "value": "",
+                "type": "query",
+                "description": "Manuscript number associated with the dataset."
+              },
+              {
+                "name": "curationStatus",
+                "value": "",
+                "type": "query",
+                "description": "Curation Status"
+              }
+            ]
+          },
+          "docs": "The items returned may depend on user permissions, and are paged."
+        },
+        {
+          "info": {
+            "name": "Create a new dataset with an automatically-generated DOI",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://datadryad.org/api/v2/datasets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "You must be <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\">logged in</a>. Use a JSON structure as shown below.\n\nIf no funders are declared, users will be asked to list them later; to declare no funding submit a funder with <code>identifier&#x0003A; '0'</code> (see the \"Set no funding\" example). If human subject information is in the dataset, include a statement explaining how the data was de-identified (see the 'Include HSI statement' example).\n\nFor"
+        },
+        {
+          "info": {
+            "name": "Get a dataset record by its DOI",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/datasets/:doi",
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path",
+                "description": "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+              }
+            ]
+          },
+          "docs": "Be sure to URL encode the DOI (see example below). Datasets that are not yet published are only retrievable by users with permission to access them."
+        },
+        {
+          "info": {
+            "name": "Update (overwrite) dataset metadata for DOI",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://datadryad.org/api/v2/datasets/:doi",
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path",
+                "description": "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This will overwrite writeable metadata for an in-progress dataset.  This is an insert or update action (upsert). Be sure to URL encode the DOI (see example below). You must be <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\">logged in</a>. Use a JSON structure as shown below. For a more full list of properties that can be sent, check the Schema below and the <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/sample_dataset.js"
+        },
+        {
+          "info": {
+            "name": "Update the state of an in-progress dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://datadryad.org/api/v2/datasets/:doi",
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path",
+                "description": "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sending a JSON patch request whose JSON body looks like **[ { 'op': 'replace', 'path': '/versionStatus', 'value': 'submitted' } ]**. (This is the most common command, attempting to change the versionStatus to 'submitted'.) Other options are available that are useful for integration with manuscript processing systems. See the [embedded Dryad documentation](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/embedded_submission.md) for details. Set http header **'Content-Type: appl"
+        },
+        {
+          "info": {
+            "name": "Get a download package for a dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/datasets/:doi/download",
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path",
+                "description": "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This downloads the zip package of the latest submitted version of the dataset that is visible to the user (or public)."
+        },
+        {
+          "info": {
+            "name": "Show all versions of a dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/datasets/:doi/versions",
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path",
+                "description": "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Which page of results to view. Defaults to page 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return on each page. Defaults to 20. Maximum allowed is 100."
+              }
+            ]
+          },
+          "docs": "The <code>/versions</code> endpoint lists all versions visible to the user (or public). This is in contrast to GETting the datasets endpoint for a DOI, since it only embeds metadata for the latest visible version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,347 @@
+{
+  "item": [
+    {
+      "id": "24afc325-be05-4e91-8661-a25be1502344",
+      "name": "reports",
+      "description": {
+        "content": "Reports on content in Dryad",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8c8b83e1-ed7a-4839-9d1a-cba2f3ba2362",
+          "name": "Get a list of reports that are updated regularly",
+          "request": {
+            "name": "Get a list of reports that are updated regularly",
+            "description": {},
+            "url": {
+              "path": [
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ec0043af-0730-4586-922a-ffd480c49e26",
+              "name": "A list of reports URLs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"http://CQuZTtdmzZykLUgZofeYWOgusYQpocMWc.jvsmP41QQtZVpDR7TSvVLpe4fMOuRtd3QCJVscoSkCWbB97i-X5z\"\n    },\n    \"reports\": [\n      {\n        \"href\": \"https://ovaEDAUjX.klb+KmwMb0hs0EB\"\n      },\n      {\n        \"href\": \"https://LSidbpimPOUZSVsswsinWJNzpVayr.sbELddFCBRHaBezm\"\n      }\n    ],\n    \"curies\": [\n      {\n        \"name\": \"string\",\n        \"href\": \"https://LCwDGlIsCsMYgrQzSyttLR.awlImEgUTy0UYYeSVUqr+IbqLFwiAFt7qyOlx5BGvARb8\",\n        \"templated\": true\n      },\n      {\n        \"name\": \"string\",\n        \"href\": \"http://nahrGfjpYYBrJubbZmKSb.duak8MvS8Wm5JjuGhQ0zqgFtK4LGVKmHoXebtY0NWPZ.5uP4-uTKoDHF\",\n        \"templated\": true\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a58f94bf-ab26-45bb-bced-2e6b24ad9057",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f394e08b-75f3-40c5-a405-2d39519902a4",
+          "name": "Get a particular report",
+          "request": {
+            "name": "Get a particular report",
+            "description": {},
+            "url": {
+              "path": [
+                "reports",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of a report."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0e6b9dc0-07cc-4448-b4c9-2b0e1e0d3515",
+              "name": "A report (CSV download)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d72ce4b3-c5d2-48df-a167-af670f0172dd",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Could not find requested report {name}.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcae86b8-d2ba-4c3f-a154-d459a64d53c4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c54cb5b-6a70-45f9-9dcb-e8d5941228d9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of a report."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unable to render report file.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://datadryad.org/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0f78a9d9-34d3-4a31-abcd-8062323357dc",
+    "name": "Dryad datasets reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents. The most common case is to use GET requests to retrieve information about datasets, versions, and files.\n\nWhen using the API, any DOI included must be <a href=\"https://www.w3schools.com/tags/ref_urlencode.ASP\" target=\"blank\">URL-encoded<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> to ensure correct processing. Anonymous users of the API are limited to 30 requests per minute, and are not allowed to download data files. \n\nExamples:\n\n- [List datasets](https://datadryad.org/api/v2/datasets)\n- [Search for datasets](https://datadryad.org/api/v2/search?q=carbon)\n- [Get information about a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7)\n- [List versions of a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7/versions)\n- [List files in a version](https://datadryad.org/api/v2/versions/26724/files)\n\nDetailed documentation:\n\n- For details on all of our REST API operations, click the links in the menu on this page.\n- [Search API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md)\n- [Submission API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md)\n\n## API accounts \n\nTo access more powerful features, an API account is required. API accounts allow users to:\n\n- Access the API at higher rates (authenticated users may make up to 240 requests per minute)\n- Download data files\n- Access datasets that are not yet public, but are associated with the account's community (institution, journal, etc.)\n- Update datasets associated with the account's community\n\nSee the <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\" target=\"blank\">API accounts document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> for more information on requesting an API account and using it to access datasets.\n\n\n## Submission\n\nThe Submission API is used by organizations that partner closely with Dryad, and use systems to create dataset submissions directly. Please contact us if you are [interested in partnering with Dryad](/contact#get-involved), and setting up an API account for submission.\n\nThe <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md\" target=\"blank\">API submission examples document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> gives concrete examples of submission through the Dryad API.\n\n\n### Dryad sandbox\n\n<a href=\"https://sandbox.datadryad.org/\" target=\"blank\">Dryad's sandbox server<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> allows users to experiment with data submission and the Dryad API, without worrying about the effects on \"real\" data. Anyone may create an account on the sandbox server for testing purposes. When creating an account, keep in mind that Dryad's sandbox relies on the <a href=\"https://sandbox.orcid.org/\" target=\"_blank\">sandbox version of ORCID<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a>, which allows you to make test ORCID accounts. Sandbox ORCID IDs should be used in the Dryad sandbox, while use of Dryad's production system requires a real ORCID ID.\n",
+      "type": "text/plain"
+    }
+  }
+}

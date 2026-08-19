@@ -1,0 +1,419 @@
+{
+  "item": [
+    {
+      "id": "879f73de-3812-4373-85fe-1ca14225b7fa",
+      "name": "search",
+      "description": {
+        "content": "Searching datasets",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0188d7b1-0316-4dbc-98c7-8527e043e61b",
+          "name": "Search publicly-available datasets",
+          "request": {
+            "name": "Search publicly-available datasets",
+            "description": {
+              "content": "Search the published Dryad datasets. Query all fields, or look for terms in specific metadata fields of the dataset.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "A list of terms to be searched. If multiple terms are supplied, matches will only be returned for items that contain all terms. Terms may include an `*` at the end to indicate a wildcard. A term may be negated to indicate that it should *not* be present in the results (e.g., `cat -fish`). Use quotation marks to search for an exact phrase."
+                },
+                {
+                  "disabled": false,
+                  "key": "subject",
+                  "value": "<string>",
+                  "description": "Search for a dataset by subject keyword."
+                },
+                {
+                  "disabled": false,
+                  "key": "orcid",
+                  "value": "<string>",
+                  "description": "Search for authors using author [ORCIDs](https://orcid.org/). If multiple, separate with a space."
+                },
+                {
+                  "disabled": false,
+                  "key": "author",
+                  "value": "<string>",
+                  "description": "Search for authors by name."
+                },
+                {
+                  "disabled": false,
+                  "key": "affiliation",
+                  "value": "<string>",
+                  "description": "A ROR identifier for an institutional affiliation that must be present in the list of dataset authors. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+                },
+                {
+                  "disabled": false,
+                  "key": "facility",
+                  "value": "<string>",
+                  "description": "A ROR identifier for the dataset research facility. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+                },
+                {
+                  "disabled": false,
+                  "key": "funder",
+                  "value": "<string>",
+                  "description": "A ROR identifier for a dataset funder. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+                },
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "A ROR identifier for a dataset funder, affiliation, or research facility. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "The abbreviation for a partner organization in Dryad. This will automatically search all organizations associated with the given tenant."
+                },
+                {
+                  "disabled": false,
+                  "key": "award",
+                  "value": "<string>",
+                  "description": "An award or grant number associated with the dataset."
+                },
+                {
+                  "disabled": false,
+                  "key": "journalISSN",
+                  "value": "<string>",
+                  "description": "The journal ISSN."
+                },
+                {
+                  "disabled": false,
+                  "key": "relatedId",
+                  "value": "<string>",
+                  "description": "Any related work ID associated with the dataset, including manuscript numbers and PubMed IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "publishedSince",
+                  "value": "<string>",
+                  "description": "A date or timestamp for limiting results. Datasets will only be returned that have been published since the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "publishedBefore",
+                  "value": "<string>",
+                  "description": "A date or timestamp for limiting results. Datasets will only be returned that have been published before the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "relatedWorkIdentifier",
+                  "value": "<string>",
+                  "description": "A DOI or other URL that links a dataset to a related work. It allows `*` as a wildcard at the beginning and/or end of the value."
+                },
+                {
+                  "disabled": false,
+                  "key": "relatedWorkRelationship",
+                  "value": "<string>",
+                  "description": "The type of relationship expressed by a related work."
+                },
+                {
+                  "disabled": false,
+                  "key": "modifiedSince",
+                  "value": "<string>",
+                  "description": "A date or timestamp for limiting results. Datasets will only be returned that have been modified since the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "modifiedBefore",
+                  "value": "<string>",
+                  "description": "A date or timestamp for limiting results. Datasets will only be returned that have been modified before the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Which page of results to view. Defaults to page 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "Number of results to return on each page. Defaults to 20. Maximum allowed is 100."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0566b649-a93c-4bb8-b4b1-f80abdac28e2",
+              "name": "A list of datasets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orcid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "author",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "affiliation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "funder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "award",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "journalISSN",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relatedId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "publishedSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "publishedBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relatedWorkIdentifier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relatedWorkRelationship",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modifiedSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modifiedBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"Error reading api/v2/docs/examples/datasets.json. Can only use references from components and paths\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e984b0d9-2138-417e-8b07-0326ba9aed96",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orcid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "author",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "affiliation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "funder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "award",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "journalISSN",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relatedId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "publishedSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "publishedBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relatedWorkIdentifier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relatedWorkRelationship",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modifiedSince",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modifiedBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Dryad encountered an error parsing the query options for the search. The most likely cause of this problem is an improperly-formatted timestamp for the `modifiedSince` parameter.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://datadryad.org/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "98e11e87-68bd-4a97-90d8-b2132617e010",
+    "name": "Dryad datasets search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents. The most common case is to use GET requests to retrieve information about datasets, versions, and files.\n\nWhen using the API, any DOI included must be <a href=\"https://www.w3schools.com/tags/ref_urlencode.ASP\" target=\"blank\">URL-encoded<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> to ensure correct processing. Anonymous users of the API are limited to 30 requests per minute, and are not allowed to download data files. \n\nExamples:\n\n- [List datasets](https://datadryad.org/api/v2/datasets)\n- [Search for datasets](https://datadryad.org/api/v2/search?q=carbon)\n- [Get information about a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7)\n- [List versions of a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7/versions)\n- [List files in a version](https://datadryad.org/api/v2/versions/26724/files)\n\nDetailed documentation:\n\n- For details on all of our REST API operations, click the links in the menu on this page.\n- [Search API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md)\n- [Submission API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md)\n\n## API accounts \n\nTo access more powerful features, an API account is required. API accounts allow users to:\n\n- Access the API at higher rates (authenticated users may make up to 240 requests per minute)\n- Download data files\n- Access datasets that are not yet public, but are associated with the account's community (institution, journal, etc.)\n- Update datasets associated with the account's community\n\nSee the <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\" target=\"blank\">API accounts document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> for more information on requesting an API account and using it to access datasets.\n\n\n## Submission\n\nThe Submission API is used by organizations that partner closely with Dryad, and use systems to create dataset submissions directly. Please contact us if you are [interested in partnering with Dryad](/contact#get-involved), and setting up an API account for submission.\n\nThe <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md\" target=\"blank\">API submission examples document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> gives concrete examples of submission through the Dryad API.\n\n\n### Dryad sandbox\n\n<a href=\"https://sandbox.datadryad.org/\" target=\"blank\">Dryad's sandbox server<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> allows users to experiment with data submission and the Dryad API, without worrying about the effects on \"real\" data. Anyone may create an account on the sandbox server for testing purposes. When creating an account, keep in mind that Dryad's sandbox relies on the <a href=\"https://sandbox.orcid.org/\" target=\"_blank\">sandbox version of ORCID<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a>, which allows you to make test ORCID accounts. Sandbox ORCID IDs should be used in the Dryad sandbox, while use of Dryad's production system requires a real ORCID ID.\n",
+      "type": "text/plain"
+    }
+  }
+}

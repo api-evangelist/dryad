@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dryad datasets files API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get metadata information about a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The file ID is a unique integer and can be obtained from the list of files for a version of a dataset."
+              }
+            ]
+          },
+          "docs": "Returns file metadata information visible to the user (or public) by the file ID.  The version file list embeds this metadata and also lists the file IDs."
+        },
+        {
+          "info": {
+            "name": "Remove a file from an in-progress dataset version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://datadryad.org/api/v2/files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The file ID is a unique integer and can be obtained from the list of files for a version of a dataset."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This action only works on an in-progress dataset (this means that the latest version of a dataset associated with this file has to be in-progress). It will destroy the metadata and file if it's a staged file that hasn't been submitted to the repository yet.  If the file was submitted previously in an earlier version of the same dataset it will stage removal from the in-progress dataset version.  In order to finalize staged file changes into the storage repository, the in-progress dataset must be"
+        },
+        {
+          "info": {
+            "name": "Download a specific file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/files/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The file ID is a unique integer and can be obtained from the list of files for a version of a dataset."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Only files that have been stored in the storage repository may be downloaded (and ability to download may depend on the user).  Versions of a dataset still in-progress only have staged files that may not be downloaded until they have been submitted to the storage repository."
+        },
+        {
+          "info": {
+            "name": "Upload and stage a file for an in-progress dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://datadryad.org/api/v2/datasets/:doi/files/:filename",
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path",
+                "description": "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The filename is the filename for the file. It should be escaped in the URL (for example 'cat tundra.jpg' would be 'cat%20tundra.jpg'.  Your programming language will have a library to encode for you."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Allows uploading a file to be staged for submission to the storage repository. The files will be stored in the storage repository after the dataset is submitted.  The body of the request will be the file you are uploading.  Set the `Content-Type` http header to the appropriate mimetype for your file when uploading."
+        },
+        {
+          "info": {
+            "name": "Stage a file submission by URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://datadryad.org/api/v2/datasets/:doi/urls",
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path",
+                "description": "DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The URL you specify will be deposited into the storage repository from a publicly accessible URL on the internet when the in-progress dataset is submitted.  The dataset must be an in-progress dataset. The URL will be validated and metadata about it obtained to populate metadata about the file when it is added.  Send the url to be retrieved as part of a JSON document like **{'url': 'http://example.org/testing/my/file.csv' }**.  Priviliged users may have additional options to specify URL metadata "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

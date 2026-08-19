@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dryad datasets search API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search publicly-available datasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "A list of terms to be searched. If multiple terms are supplied, matches will only be returned for items that contain all terms. Terms may include an `*` at the end to indicate a wildcard. A term may be negated to indicate that it should *not* be present in the results (e.g., `cat -fish`). Use quotation marks to search for an exact phrase."
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "Search for a dataset by subject keyword."
+              },
+              {
+                "name": "orcid",
+                "value": "",
+                "type": "query",
+                "description": "Search for authors using author [ORCIDs](https://orcid.org/). If multiple, separate with a space."
+              },
+              {
+                "name": "author",
+                "value": "",
+                "type": "query",
+                "description": "Search for authors by name."
+              },
+              {
+                "name": "affiliation",
+                "value": "",
+                "type": "query",
+                "description": "A ROR identifier for an institutional affiliation that must be present in the list of dataset authors. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+              },
+              {
+                "name": "facility",
+                "value": "",
+                "type": "query",
+                "description": "A ROR identifier for the dataset research facility. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+              },
+              {
+                "name": "funder",
+                "value": "",
+                "type": "query",
+                "description": "A ROR identifier for a dataset funder. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+              },
+              {
+                "name": "org",
+                "value": "",
+                "type": "query",
+                "description": "A ROR identifier for a dataset funder, affiliation, or research facility. The identifier should be in the full \"https\" format and should be URL-encoded, e.g., `https%3A%2F%2Fror.org%2F00x6h5n95`."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "The abbreviation for a partner organization in Dryad. This will automatically search all organizations associated with the given tenant."
+              },
+              {
+                "name": "award",
+                "value": "",
+                "type": "query",
+                "description": "An award or grant number associated with the dataset."
+              },
+              {
+                "name": "journalISSN",
+                "value": "",
+                "type": "query",
+                "description": "The journal ISSN."
+              },
+              {
+                "name": "relatedId",
+                "value": "",
+                "type": "query",
+                "description": "Any related work ID associated with the dataset, including manuscript numbers and PubMed IDs."
+              },
+              {
+                "name": "publishedSince",
+                "value": "",
+                "type": "query",
+                "description": "A date or timestamp for limiting results. Datasets will only be returned that have been published since the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+              },
+              {
+                "name": "publishedBefore",
+                "value": "",
+                "type": "query",
+                "description": "A date or timestamp for limiting results. Datasets will only be returned that have been published before the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+              },
+              {
+                "name": "relatedWorkIdentifier",
+                "value": "",
+                "type": "query",
+                "description": "A DOI or other URL that links a dataset to a related work. It allows `*` as a wildcard at the beginning and/or end of the value."
+              },
+              {
+                "name": "relatedWorkRelationship",
+                "value": "",
+                "type": "query",
+                "description": "The type of relationship expressed by a related work."
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "A date or timestamp for limiting results. Datasets will only be returned that have been modified since the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+              },
+              {
+                "name": "modifiedBefore",
+                "value": "",
+                "type": "query",
+                "description": "A date or timestamp for limiting results. Datasets will only be returned that have been modified before the given date/time. The date must be specified in ISO 8601 format (`2020-10-08`). If including a time, the time must be specified in ISO 8601 format, and the time zone must be set to UTC, e.g., `2020-10-08T10:24:53Z`."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Which page of results to view. Defaults to page 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return on each page. Defaults to 20. Maximum allowed is 100."
+              }
+            ]
+          },
+          "docs": "Search the published Dryad datasets. Query all fields, or look for terms in specific metadata fields of the dataset."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

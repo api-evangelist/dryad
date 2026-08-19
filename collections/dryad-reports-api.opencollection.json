@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dryad datasets reports API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of reports that are updated regularly",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/reports"
+          },
+          "docs": "Get a list of reports that are updated regularly"
+        },
+        {
+          "info": {
+            "name": "Get a particular report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/reports/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of a report."
+              }
+            ]
+          },
+          "docs": "Get a particular report"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

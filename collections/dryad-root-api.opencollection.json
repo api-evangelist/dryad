@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dryad datasets root API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "root",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "The root of the API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/"
+          },
+          "docs": "Displays links to root level API objects, like the list of datasets."
+        },
+        {
+          "info": {
+            "name": "Test OAuth2 and bearer authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datadryad.org/api/v2/test",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Test your <a href='https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md'>API account authentication</a> by sending authenticated headers:  `Accept: application/json`, `Content-Type: application/json`, `Authorization: Bearer {your-token}`. \n\n `Accept` header is optional if you are using `Content-Type: application/json`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
