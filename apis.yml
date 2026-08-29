@@ -313,6 +313,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 common:
+  - type: CapabilityMap
+    url: capabilities/dryad-capability-edges.yml
+    name: Dryad Business Capability Map
   - type: Releases
     url: https://github.com/datadryad/dryad-app/releases
   - type: License

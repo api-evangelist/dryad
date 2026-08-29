@@ -1,0 +1,26 @@
+slug: dryad
+provider: Dryad
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Education
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: datasets
+  spec_file: dryad-datasets-api-openapi.yml
+  capability_id: BC-4780.40
+  capability_id_l1: BC-4780
+  capability_name: Scholarly Output & Publication Management
+  confidence: 0.7
+  evidence: POST /datasets  Create a new dataset with an automatically-generated DOI; PUT /datasets/{doi}  Update
+    (overwrite) dataset metadata for DOI
+  reason: Submission, DOI minting and metadata stewardship of research datasets in a scholarly repository
+    matches stewardship of scholarly output including open access and persistent identifiers; some ambiguity
+    as datasets are not strictly publications.
