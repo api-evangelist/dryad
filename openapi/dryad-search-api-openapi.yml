@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dryad datasets search API
-  description: "Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents. The most common case is to use GET requests to retrieve information about datasets, versions, and files.\n\nWhen using the API, any DOI included must be <a href=\"https://www.w3schools.com/tags/ref_urlencode.ASP\" target=\"blank\">URL-encoded<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> to ensure correct processing. Anonymous users of the API are limited to 30 requests per minute, and are not allowed to download data files. \n\nExamples:\n\n- [List datasets](https://datadryad.org/api/v2/datasets)\n- [Search for datasets](https://datadryad.org/api/v2/search?q=carbon)\n- [Get information about a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7)\n- [List versions of a dataset](https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.j1fd7/versions)\n- [List files in a version](https://datadryad.org/api/v2/versions/26724/files)\n\nDetailed documentation:\n\n- For details on all of our REST API operations, click the links in the menu on this page.\n- [Search API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/search.md)\n- [Submission API](https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md)\n\n## API accounts \n\nTo access more powerful features, an API account is required. API accounts allow users to:\n\n- Access the API at higher rates (authenticated users may make up to 240 requests per minute)\n- Download data files\n- Access datasets that are not yet public, but are associated with the account's community (institution, journal, etc.)\n- Update datasets associated with the account's community\n\nSee the <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md\" target=\"blank\">API accounts document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> for more information on requesting an API account and using it to access datasets.\n\n\n## Submission\n\nThe Submission API is used by organizations that partner closely with Dryad, and use systems to create dataset submissions directly. Please contact us if you are [interested in partnering with Dryad](/contact#get-involved), and setting up an API account for submission.\n\nThe <a href=\"https://github.com/datadryad/dryad-app/blob/main/documentation/apis/submission.md\" target=\"blank\">API submission examples document<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> gives concrete examples of submission through the Dryad API.\n\n\n### Dryad sandbox\n\n<a href=\"https://sandbox.datadryad.org/\" target=\"blank\">Dryad's sandbox server<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a> allows users to experiment with data submission and the Dryad API, without worrying about the effects on \"real\" data. Anyone may create an account on the sandbox server for testing purposes. When creating an account, keep in mind that Dryad's sandbox relies on the <a href=\"https://sandbox.orcid.org/\" target=\"_blank\">sandbox version of ORCID<i class=\"fas fa-arrow-up-right-from-square exit-icon\" aria-label=\" (opens in new window)\" role=\"img\"></i></a>, which allows you to make test ORCID accounts. Sandbox ORCID IDs should be used in the Dryad sandbox, while use of Dryad's production system requires a real ORCID ID.\n"
+  title: Dryad Search API
+  description: Dryad's REST API allows detailed interaction and programmatic interfacing with Dryad contents.
   version: 2.1.0
 servers:
 - url: https://datadryad.org/api/v2
@@ -9,14 +9,14 @@ servers:
 - url: https://sandbox.datadryad.org/api/v2
   description: Sandbox server, for testing new features.
 tags:
-- name: search
+- name: Search
   description: Searching datasets
 paths:
   /search:
     get:
       summary: Search publicly-available datasets
       tags:
-      - search
+      - Search
       description: Search the published Dryad datasets. Query all fields, or look for terms in specific metadata fields of the dataset.
       parameters:
       - in: query
@@ -128,55 +128,35 @@ paths:
                 $ref: '#/components/schemas/Error'
               example:
                 error: Dryad encountered an error parsing the query options for the search. The most likely cause of this problem is an improperly-formatted timestamp for the `modifiedSince` parameter.
+      operationId: getSearch
+      x-operation-id-source: derived
 components:
-  parameters:
-    per_page:
-      in: query
-      name: per_page
-      schema:
-        type: integer
-      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
-    page:
-      in: query
-      name: page
-      schema:
-        type: integer
-      description: Which page of results to view. Defaults to page 1.
   schemas:
-    embedded_datasets:
+    hal_self_link:
       type: object
       properties:
-        _embedded:
-          type: object
-          properties:
-            stash:datasets:
-              type: array
-              items:
-                $ref: '#/components/schemas/dataset'
-    geolocationBox:
+        self:
+          $ref: '#/components/schemas/hal_link'
+    hal_link:
+      type: object
       properties:
-        swLongitude:
-          description: The longitude of the southwest corner of the box.
-          type: number
-        swLatitude:
-          description: The latitude of the southwest corner of the box.
-          type: number
-        neLongitude:
-          description: The longitude of the northeast corner of the box.
-          type: number
-        neLatitude:
-          description: The latitude of the northeast corner of the box.
-          type: number
-    hal_page_links:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
+    hal_dataset_links:
       properties:
-        first:
+        stash:versions:
           $ref: '#/components/schemas/hal_link'
-        last:
+        stash:version:
           $ref: '#/components/schemas/hal_link'
-        prev:
+        stash:download:
           $ref: '#/components/schemas/hal_link'
-        next:
-          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
     relatedWork:
       properties:
         relationship:
@@ -193,79 +173,61 @@ components:
           type: string
         identifier:
           type: string
-    hal_paged_response:
-      allOf:
-      - properties:
-          _links:
-            allOf:
-            - $ref: '#/components/schemas/hal_self_link'
-            - $ref: '#/components/schemas/hal_page_links'
-      - $ref: '#/components/schemas/paging_counts'
-    paging_counts:
+    Error:
+      type: object
       properties:
-        count:
-          type: integer
-        total:
-          type: integer
+        error:
+          type: string
+    version:
+      allOf:
+      - $ref: '#/components/schemas/version_links'
+      - $ref: '#/components/schemas/dc_metadata'
+      - properties:
+          versionNumber:
+            type: integer
+          versionStatus:
+            type: string
+            enum:
+            - in_progress
+            - processing
+            - submitted
+            description: Internal processing status of files.
+          curationStatus:
+            type: string
+            enum:
+            - In progress
+            - Processing
+            - Queued for curation
+            - Private for Peer Review
+            - Awaiting payment
+            - Curation
+            - Action required
+            - Withdrawn
+            - Embargoed
+            - Published
+            description: Status of the submission in the curation workflow.
+          versionChanges:
+            type: string
+            enum:
+            - files_changed
+            - metadata_changed
+          publicationDate:
+            type: string
+          lastModificationDate:
+            type: string
+          visibility:
+            type: string
+            description: Whether or not this version is publicly visible.
     dataset_links:
       properties:
         _links:
           allOf:
           - $ref: '#/components/schemas/hal_self_link'
           - $ref: '#/components/schemas/hal_dataset_links'
-    hal_version_links:
-      properties:
-        stash:dataset:
-          $ref: '#/components/schemas/hal_link'
-        stash:files:
-          $ref: '#/components/schemas/hal_link'
-        stash:download:
-          $ref: '#/components/schemas/hal_link'
-        curies:
-          type: array
-          items:
-            $ref: '#/components/schemas/hal_curie'
-    funder:
-      properties:
-        organization:
-          type: string
-        identifier:
-          type: string
-          description: The organization identifier, for example a ROR ID.
-          example: https://ror.org/00x6h5n95
-        identifierType:
-          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
-          type: string
-          example: ror
-        awardNumber:
-          type: string
-        awardDescription:
-          description: Usually used for the program or the division of the award.
-          type: string
-        order:
-          type: integer
-    hal_link:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-      required:
-      - href
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-    geolocationPoint:
-      type: object
-      properties:
-        latitude:
-          description: The latitude of the point.
-          type: number
-        longitude:
-          description: The longitude of the point.
-          type: number
+    datasets:
+      allOf:
+      - $ref: '#/components/schemas/hal_paged_response'
+      - $ref: '#/components/schemas/embedded_datasets'
     dataset:
       allOf:
       - properties:
@@ -292,6 +254,42 @@ components:
           license:
             type: string
             description: The license of the dataset
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
+    geolocationBox:
+      properties:
+        swLongitude:
+          description: The longitude of the southwest corner of the box.
+          type: number
+        swLatitude:
+          description: The latitude of the southwest corner of the box.
+          type: number
+        neLongitude:
+          description: The longitude of the northeast corner of the box.
+          type: number
+        neLatitude:
+          description: The latitude of the northeast corner of the box.
+          type: number
+    hal_paged_response:
+      allOf:
+      - properties:
+          _links:
+            allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_page_links'
+      - $ref: '#/components/schemas/paging_counts'
     dc_metadata:
       type: object
       properties:
@@ -336,81 +334,59 @@ components:
       - title
       - authors
       - abstract
-    version:
-      allOf:
-      - $ref: '#/components/schemas/version_links'
-      - $ref: '#/components/schemas/dc_metadata'
-      - properties:
-          versionNumber:
-            type: integer
-          versionStatus:
-            type: string
-            enum:
-            - in_progress
-            - processing
-            - submitted
-            description: Internal processing status of files.
-          curationStatus:
-            type: string
-            enum:
-            - In progress
-            - Processing
-            - Queued for curation
-            - Private for Peer Review
-            - Awaiting payment
-            - Curation
-            - Action required
-            - Withdrawn
-            - Embargoed
-            - Published
-            description: Status of the submission in the curation workflow.
-          versionChanges:
-            type: string
-            enum:
-            - files_changed
-            - metadata_changed
-          publicationDate:
-            type: string
-          lastModificationDate:
-            type: string
-          visibility:
-            type: string
-            description: Whether or not this version is publicly visible.
-    geolocation:
-      properties:
-        place:
-          description: A place name.
-          type: string
-        box:
-          $ref: '#/components/schemas/geolocationBox'
-          description: A bounding box.
-        point:
-          $ref: '#/components/schemas/geolocationPoint'
-          description: A coordinate point.
-    hal_self_link:
+    embedded_datasets:
       type: object
       properties:
-        self:
+        _embedded:
+          type: object
+          properties:
+            stash:datasets:
+              type: array
+              items:
+                $ref: '#/components/schemas/dataset'
+    funder:
+      properties:
+        organization:
+          type: string
+        identifier:
+          type: string
+          description: The organization identifier, for example a ROR ID.
+          example: https://ror.org/00x6h5n95
+        identifierType:
+          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
+          type: string
+          example: ror
+        awardNumber:
+          type: string
+        awardDescription:
+          description: Usually used for the program or the division of the award.
+          type: string
+        order:
+          type: integer
+    hal_page_links:
+      properties:
+        first:
           $ref: '#/components/schemas/hal_link'
-    hal_curie:
+        last:
+          $ref: '#/components/schemas/hal_link'
+        prev:
+          $ref: '#/components/schemas/hal_link'
+        next:
+          $ref: '#/components/schemas/hal_link'
+    geolocationPoint:
       type: object
       properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
-    hal_dataset_links:
+        latitude:
+          description: The latitude of the point.
+          type: number
+        longitude:
+          description: The longitude of the point.
+          type: number
+    hal_version_links:
       properties:
-        stash:versions:
+        stash:dataset:
           $ref: '#/components/schemas/hal_link'
-        stash:version:
+        stash:files:
           $ref: '#/components/schemas/hal_link'
         stash:download:
           $ref: '#/components/schemas/hal_link'
@@ -448,10 +424,36 @@ components:
           type: string
         order:
           type: integer
-    datasets:
-      allOf:
-      - $ref: '#/components/schemas/hal_paged_response'
-      - $ref: '#/components/schemas/embedded_datasets'
+    paging_counts:
+      properties:
+        count:
+          type: integer
+        total:
+          type: integer
+    geolocation:
+      properties:
+        place:
+          description: A place name.
+          type: string
+        box:
+          $ref: '#/components/schemas/geolocationBox'
+          description: A bounding box.
+        point:
+          $ref: '#/components/schemas/geolocationPoint'
+          description: A coordinate point.
+  parameters:
+    per_page:
+      in: query
+      name: per_page
+      schema:
+        type: integer
+      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
+    page:
+      in: query
+      name: page
+      schema:
+        type: integer
+      description: Which page of results to view. Defaults to page 1.
   securitySchemes:
     bearerAuth:
       type: http

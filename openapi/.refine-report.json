@@ -1,13 +1,7 @@
 {
   "provider": "dryad",
   "sources": [
-    "dryad-datasets-api-openapi.yml",
-    "dryad-files-api-openapi.yml",
-    "dryad-internal-api-openapi.yml",
-    "dryad-reports-api-openapi.yml",
-    "dryad-root-api-openapi.yml",
-    "dryad-search-api-openapi.yml",
-    "dryad-versions-api-openapi.yml"
+    "_original/openapi.yml"
   ],
   "outputs": [
     "dryad-datasets-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "dryad-datasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dryad-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dryad-internal-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dryad-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dryad-root-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dryad-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dryad-versions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
