@@ -102,41 +102,111 @@ paths:
       operationId: getVersionsByIdDownload
       x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Not Found
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Unauthorized, must have current bearer token.
+    Unacceptable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
   schemas:
-    hal_self_link:
-      type: object
+    funder:
       properties:
-        self:
-          $ref: '#/components/schemas/hal_link'
-    hal_link:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-      required:
-      - href
-    relatedWork:
-      properties:
-        relationship:
-          format: string
-          enum:
-          - article
-          - dataset
-          - preprint
-          - software
-          - supplemental_information
-          - primary_article
-          - data_management_plan
-        identifierType:
+        organization:
           type: string
         identifier:
           type: string
-    Error:
-      type: object
-      properties:
-        error:
+          description: The organization identifier, for example a ROR ID.
+          example: https://ror.org/00x6h5n95
+        identifierType:
+          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
           type: string
+          example: ror
+        awardNumber:
+          type: string
+        awardDescription:
+          description: Usually used for the program or the division of the award.
+          type: string
+        order:
+          type: integer
+    hal_page_links:
+      properties:
+        first:
+          $ref: '#/components/schemas/hal_link'
+        last:
+          $ref: '#/components/schemas/hal_link'
+        prev:
+          $ref: '#/components/schemas/hal_link'
+        next:
+          $ref: '#/components/schemas/hal_link'
+    file:
+      allOf:
+      - $ref: '#/components/schemas/file_links'
+      - properties:
+          path:
+            type: string
+          size:
+            type: integer
+          mimeType:
+            type: string
+          status:
+            type: string
+          digest:
+            type: string
+          digestType:
+            type: string
+          description:
+            type: string
+    paging_counts:
+      properties:
+        count:
+          type: integer
+        total:
+          type: integer
+    hal_version_links:
+      properties:
+        stash:dataset:
+          $ref: '#/components/schemas/hal_link'
+        stash:files:
+          $ref: '#/components/schemas/hal_link'
+        stash:download:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+    geolocation:
+      properties:
+        place:
+          description: A place name.
+          type: string
+        box:
+          $ref: '#/components/schemas/geolocationBox'
+          description: A bounding box.
+        point:
+          $ref: '#/components/schemas/geolocationPoint'
+          description: A coordinate point.
+    file_links:
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_file_links'
     version:
       allOf:
       - $ref: '#/components/schemas/version_links'
@@ -177,38 +247,12 @@ components:
           visibility:
             type: string
             description: Whether or not this version is publicly visible.
-    hal_file_links:
+    version_links:
       properties:
-        stash:dataset:
-          $ref: '#/components/schemas/hal_link'
-        stash:version:
-          $ref: '#/components/schemas/hal_link'
-        stash:files:
-          $ref: '#/components/schemas/hal_link'
-        stash:download:
-          $ref: '#/components/schemas/hal_link'
-        curies:
-          type: array
-          items:
-            $ref: '#/components/schemas/hal_curie'
-    files:
-      allOf:
-      - $ref: '#/components/schemas/hal_paged_response'
-      - $ref: '#/components/schemas/embedded_files'
-    hal_curie:
-      type: object
-      properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_version_links'
     geolocationBox:
       properties:
         swLongitude:
@@ -223,42 +267,19 @@ components:
         neLatitude:
           description: The latitude of the northeast corner of the box.
           type: number
-    file:
-      allOf:
-      - $ref: '#/components/schemas/file_links'
-      - properties:
-          path:
-            type: string
-          size:
-            type: integer
-          mimeType:
-            type: string
-          status:
-            type: string
-          digest:
-            type: string
-          digestType:
-            type: string
-          description:
-            type: string
-    embedded_files:
+    Error:
       type: object
       properties:
-        _embedded:
-          type: object
-          properties:
-            stash:files:
-              type: array
-              items:
-                $ref: '#/components/schemas/file'
-    hal_paged_response:
-      allOf:
-      - properties:
-          _links:
-            allOf:
-            - $ref: '#/components/schemas/hal_self_link'
-            - $ref: '#/components/schemas/hal_page_links'
-      - $ref: '#/components/schemas/paging_counts'
+        error:
+          type: string
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
     dc_metadata:
       type: object
       properties:
@@ -303,53 +324,15 @@ components:
       - title
       - authors
       - abstract
-    file_links:
-      properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_file_links'
-    funder:
-      properties:
-        organization:
-          type: string
-        identifier:
-          type: string
-          description: The organization identifier, for example a ROR ID.
-          example: https://ror.org/00x6h5n95
-        identifierType:
-          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
-          type: string
-          example: ror
-        awardNumber:
-          type: string
-        awardDescription:
-          description: Usually used for the program or the division of the award.
-          type: string
-        order:
-          type: integer
-    hal_page_links:
-      properties:
-        first:
-          $ref: '#/components/schemas/hal_link'
-        last:
-          $ref: '#/components/schemas/hal_link'
-        prev:
-          $ref: '#/components/schemas/hal_link'
-        next:
-          $ref: '#/components/schemas/hal_link'
-    geolocationPoint:
-      type: object
-      properties:
-        latitude:
-          description: The latitude of the point.
-          type: number
-        longitude:
-          description: The longitude of the point.
-          type: number
-    hal_version_links:
+    files:
+      allOf:
+      - $ref: '#/components/schemas/hal_paged_response'
+      - $ref: '#/components/schemas/embedded_files'
+    hal_file_links:
       properties:
         stash:dataset:
+          $ref: '#/components/schemas/hal_link'
+        stash:version:
           $ref: '#/components/schemas/hal_link'
         stash:files:
           $ref: '#/components/schemas/hal_link'
@@ -359,12 +342,39 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/hal_curie'
-    version_links:
+    embedded_files:
+      type: object
       properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_version_links'
+        _embedded:
+          type: object
+          properties:
+            stash:files:
+              type: array
+              items:
+                $ref: '#/components/schemas/file'
+    geolocationPoint:
+      type: object
+      properties:
+        latitude:
+          description: The latitude of the point.
+          type: number
+        longitude:
+          description: The longitude of the point.
+          type: number
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
     author:
       properties:
         firstName:
@@ -389,24 +399,48 @@ components:
           type: string
         order:
           type: integer
-    paging_counts:
+    relatedWork:
       properties:
-        count:
-          type: integer
-        total:
-          type: integer
-    geolocation:
-      properties:
-        place:
-          description: A place name.
+        relationship:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+        identifierType:
           type: string
-        box:
-          $ref: '#/components/schemas/geolocationBox'
-          description: A bounding box.
-        point:
-          $ref: '#/components/schemas/geolocationPoint'
-          description: A coordinate point.
+        identifier:
+          type: string
+    hal_paged_response:
+      allOf:
+      - properties:
+          _links:
+            allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_page_links'
+      - $ref: '#/components/schemas/paging_counts'
+    hal_self_link:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
   parameters:
+    page:
+      in: query
+      name: page
+      schema:
+        type: integer
+      description: Which page of results to view. Defaults to page 1.
+    per_page:
+      in: query
+      name: per_page
+      schema:
+        type: integer
+      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
     version_id:
       in: path
       name: id
@@ -414,40 +448,6 @@ components:
         type: integer
       required: true
       description: The version ID is a unique integer and can be obtained from the list of versions for a dataset.
-    per_page:
-      in: query
-      name: per_page
-      schema:
-        type: integer
-      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
-    page:
-      in: query
-      name: page
-      schema:
-        type: integer
-      description: Which page of results to view. Defaults to page 1.
-  responses:
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Not Found
-    Unacceptable:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Unauthorized, must have current bearer token.
   securitySchemes:
     bearerAuth:
       type: http

@@ -32,16 +32,25 @@ image: https://datadryad.org/images/logo.png
 tags:
   - Research Data
   - Open Science
+  - Research Repository
+  - Datasets
+  - Biology
+  - Ecology
+  - Open Access
+tags_raw:
+  - Research Data
+  - Open Science
   - Data Repository
   - Datasets
   - Biology
   - Ecology
   - Open Access
+  - Research Repository
 url: https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
 - aid: dryad:dryad-datasets-api
-  name: Dryad datasets API
+  name: Dryad Datasets API
   description: Dataset operations
   humanURL: https://datadryad.org/api/v2/docs
   baseURL: https://datadryad.org/api/v2
@@ -80,7 +89,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 - aid: dryad:dryad-files-api
-  name: Dryad files API
+  name: Dryad Files API
   description: Operations on individual files of a dataset
   humanURL: https://datadryad.org/api/v2/docs
   baseURL: https://datadryad.org/api/v2
@@ -119,7 +128,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 - aid: dryad:dryad-internal-api
-  name: Dryad internal API
+  name: Dryad Internal API
   description: Internal APIs not of general interest to the public
   humanURL: https://datadryad.org/api/v2/docs
   baseURL: https://datadryad.org/api/v2
@@ -158,7 +167,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 - aid: dryad:dryad-reports-api
-  name: Dryad reports API
+  name: Dryad Reports API
   description: Reports on content in Dryad
   humanURL: https://datadryad.org/api/v2/docs
   baseURL: https://datadryad.org/api/v2
@@ -197,7 +206,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 - aid: dryad:dryad-root-api
-  name: Dryad root API
+  name: Dryad Root API
   description: Root-level API calls
   humanURL: https://datadryad.org/api/v2/docs
   baseURL: https://datadryad.org/api/v2
@@ -236,7 +245,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 - aid: dryad:dryad-search-api
-  name: Dryad search API
+  name: Dryad Search API
   description: Searching datasets
   humanURL: https://datadryad.org/api/v2/docs
   baseURL: https://datadryad.org/api/v2
@@ -275,7 +284,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/dryad/refs/heads/main/vocabulary/vocabulary.json
 - aid: dryad:dryad-versions-api
-  name: Dryad versions API
+  name: Dryad Versions API
   description: Operations on individual versions of a dataset
   humanURL: https://datadryad.org/api/v2/docs
   baseURL: https://datadryad.org/api/v2

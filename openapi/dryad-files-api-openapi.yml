@@ -173,12 +173,63 @@ paths:
       operationId: postDatasetsByDoiUrls
       x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Not Found
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Unauthorized, must have current bearer token.
+    Unacceptable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
   schemas:
-    hal_self_link:
+    hal_curie:
       type: object
       properties:
-        self:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
+    hal_file_links:
+      properties:
+        stash:dataset:
           $ref: '#/components/schemas/hal_link'
+        stash:version:
+          $ref: '#/components/schemas/hal_link'
+        stash:files:
+          $ref: '#/components/schemas/hal_link'
+        stash:download:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+    file_links:
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_file_links'
     file:
       allOf:
       - $ref: '#/components/schemas/file_links'
@@ -205,6 +256,16 @@ components:
           format: uri
       required:
       - href
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    hal_self_link:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
     url_json:
       type: object
       properties:
@@ -212,53 +273,7 @@ components:
           type: string
       required:
       - url
-    hal_curie:
-      type: object
-      properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-    hal_file_links:
-      properties:
-        stash:dataset:
-          $ref: '#/components/schemas/hal_link'
-        stash:version:
-          $ref: '#/components/schemas/hal_link'
-        stash:files:
-          $ref: '#/components/schemas/hal_link'
-        stash:download:
-          $ref: '#/components/schemas/hal_link'
-        curies:
-          type: array
-          items:
-            $ref: '#/components/schemas/hal_curie'
-    file_links:
-      properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_file_links'
   parameters:
-    doi:
-      in: path
-      name: doi
-      schema:
-        type: string
-      required: true
-      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
     filename:
       in: path
       name: id
@@ -273,28 +288,13 @@ components:
         type: integer
       required: true
       description: The file ID is a unique integer and can be obtained from the list of files for a version of a dataset.
-  responses:
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Not Found
-    Unacceptable:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Unauthorized, must have current bearer token.
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
   securitySchemes:
     bearerAuth:
       type: http

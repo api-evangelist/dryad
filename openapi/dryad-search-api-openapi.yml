@@ -132,24 +132,56 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    hal_self_link:
-      type: object
+    funder:
       properties:
-        self:
-          $ref: '#/components/schemas/hal_link'
-    hal_link:
-      type: object
-      properties:
-        href:
+        organization:
           type: string
-          format: uri
-      required:
-      - href
-    hal_dataset_links:
+        identifier:
+          type: string
+          description: The organization identifier, for example a ROR ID.
+          example: https://ror.org/00x6h5n95
+        identifierType:
+          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
+          type: string
+          example: ror
+        awardNumber:
+          type: string
+        awardDescription:
+          description: Usually used for the program or the division of the award.
+          type: string
+        order:
+          type: integer
+    dataset_links:
       properties:
-        stash:versions:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_dataset_links'
+    embedded_datasets:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            stash:datasets:
+              type: array
+              items:
+                $ref: '#/components/schemas/dataset'
+    hal_page_links:
+      properties:
+        first:
           $ref: '#/components/schemas/hal_link'
-        stash:version:
+        last:
+          $ref: '#/components/schemas/hal_link'
+        prev:
+          $ref: '#/components/schemas/hal_link'
+        next:
+          $ref: '#/components/schemas/hal_link'
+    hal_version_links:
+      properties:
+        stash:dataset:
+          $ref: '#/components/schemas/hal_link'
+        stash:files:
           $ref: '#/components/schemas/hal_link'
         stash:download:
           $ref: '#/components/schemas/hal_link'
@@ -157,27 +189,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/hal_curie'
-    relatedWork:
+    paging_counts:
       properties:
-        relationship:
-          format: string
-          enum:
-          - article
-          - dataset
-          - preprint
-          - software
-          - supplemental_information
-          - primary_article
-          - data_management_plan
-        identifierType:
-          type: string
-        identifier:
-          type: string
-    Error:
-      type: object
+        count:
+          type: integer
+        total:
+          type: integer
+    geolocation:
       properties:
-        error:
+        place:
+          description: A place name.
           type: string
+        box:
+          $ref: '#/components/schemas/geolocationBox'
+          description: A bounding box.
+        point:
+          $ref: '#/components/schemas/geolocationPoint'
+          description: A coordinate point.
     version:
       allOf:
       - $ref: '#/components/schemas/version_links'
@@ -218,56 +246,12 @@ components:
           visibility:
             type: string
             description: Whether or not this version is publicly visible.
-    dataset_links:
+    version_links:
       properties:
         _links:
           allOf:
           - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_dataset_links'
-    datasets:
-      allOf:
-      - $ref: '#/components/schemas/hal_paged_response'
-      - $ref: '#/components/schemas/embedded_datasets'
-    dataset:
-      allOf:
-      - properties:
-          identifier:
-            type: string
-          id:
-            type: integer
-          storageSize:
-            type: integer
-          relatedPublicationISSN:
-            type: string
-      - $ref: '#/components/schemas/version'
-      - $ref: '#/components/schemas/dataset_links'
-      - properties:
-          metrics:
-            type: object
-            properties:
-              views:
-                type: integer
-              downloads:
-                type: integer
-              citations:
-                type: integer
-          license:
-            type: string
-            description: The license of the dataset
-    hal_curie:
-      type: object
-      properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
+          - $ref: '#/components/schemas/hal_version_links'
     geolocationBox:
       properties:
         swLongitude:
@@ -282,14 +266,19 @@ components:
         neLatitude:
           description: The latitude of the northeast corner of the box.
           type: number
-    hal_paged_response:
-      allOf:
-      - properties:
-          _links:
-            allOf:
-            - $ref: '#/components/schemas/hal_self_link'
-            - $ref: '#/components/schemas/hal_page_links'
-      - $ref: '#/components/schemas/paging_counts'
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     dc_metadata:
       type: object
       properties:
@@ -334,45 +323,32 @@ components:
       - title
       - authors
       - abstract
-    embedded_datasets:
-      type: object
-      properties:
-        _embedded:
-          type: object
-          properties:
-            stash:datasets:
-              type: array
-              items:
-                $ref: '#/components/schemas/dataset'
-    funder:
-      properties:
-        organization:
-          type: string
-        identifier:
-          type: string
-          description: The organization identifier, for example a ROR ID.
-          example: https://ror.org/00x6h5n95
-        identifierType:
-          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
-          type: string
-          example: ror
-        awardNumber:
-          type: string
-        awardDescription:
-          description: Usually used for the program or the division of the award.
-          type: string
-        order:
-          type: integer
-    hal_page_links:
-      properties:
-        first:
-          $ref: '#/components/schemas/hal_link'
-        last:
-          $ref: '#/components/schemas/hal_link'
-        prev:
-          $ref: '#/components/schemas/hal_link'
-        next:
-          $ref: '#/components/schemas/hal_link'
+    dataset:
+      allOf:
+      - properties:
+          identifier:
+            type: string
+          id:
+            type: integer
+          storageSize:
+            type: integer
+          relatedPublicationISSN:
+            type: string
+      - $ref: '#/components/schemas/version'
+      - $ref: '#/components/schemas/dataset_links'
+      - properties:
+          metrics:
+            type: object
+            properties:
+              views:
+                type: integer
+              downloads:
+                type: integer
+              citations:
+                type: integer
+          license:
+            type: string
+            description: The license of the dataset
     geolocationPoint:
       type: object
       properties:
@@ -382,11 +358,11 @@ components:
         longitude:
           description: The longitude of the point.
           type: number
-    hal_version_links:
+    hal_dataset_links:
       properties:
-        stash:dataset:
+        stash:versions:
           $ref: '#/components/schemas/hal_link'
-        stash:files:
+        stash:version:
           $ref: '#/components/schemas/hal_link'
         stash:download:
           $ref: '#/components/schemas/hal_link'
@@ -394,12 +370,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/hal_curie'
-    version_links:
+    hal_curie:
+      type: object
       properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_version_links'
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
     author:
       properties:
         firstName:
@@ -424,36 +408,52 @@ components:
           type: string
         order:
           type: integer
-    paging_counts:
+    relatedWork:
       properties:
-        count:
-          type: integer
-        total:
-          type: integer
-    geolocation:
-      properties:
-        place:
-          description: A place name.
+        relationship:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+        identifierType:
           type: string
-        box:
-          $ref: '#/components/schemas/geolocationBox'
-          description: A bounding box.
-        point:
-          $ref: '#/components/schemas/geolocationPoint'
-          description: A coordinate point.
+        identifier:
+          type: string
+    datasets:
+      allOf:
+      - $ref: '#/components/schemas/hal_paged_response'
+      - $ref: '#/components/schemas/embedded_datasets'
+    hal_paged_response:
+      allOf:
+      - properties:
+          _links:
+            allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_page_links'
+      - $ref: '#/components/schemas/paging_counts'
+    hal_self_link:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
   parameters:
-    per_page:
-      in: query
-      name: per_page
-      schema:
-        type: integer
-      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
     page:
       in: query
       name: page
       schema:
         type: integer
       description: Which page of results to view. Defaults to page 1.
+    per_page:
+      in: query
+      name: per_page
+      schema:
+        type: integer
+      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
   securitySchemes:
     bearerAuth:
       type: http
