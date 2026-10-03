@@ -79,6 +79,11 @@ components:
           example:
             error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     hal_curie:
       type: object
       properties:
@@ -93,6 +98,14 @@ components:
       - name
       - href
       - templated
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
     root_links:
       type: object
       properties:
@@ -108,19 +121,6 @@ components:
             $ref: '#/components/schemas/hal_curie'
       required:
       - self
-    hal_link:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-      required:
-      - href
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http

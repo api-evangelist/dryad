@@ -260,6 +260,52 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    hal_version_links:
+      properties:
+        stash:dataset:
+          $ref: '#/components/schemas/hal_link'
+        stash:files:
+          $ref: '#/components/schemas/hal_link'
+        stash:download:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+    hal_dataset_links:
+      properties:
+        stash:versions:
+          $ref: '#/components/schemas/hal_link'
+        stash:version:
+          $ref: '#/components/schemas/hal_link'
+        stash:download:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
     admin_values:
       properties:
         userId:
@@ -301,80 +347,17 @@ components:
         invoiceId:
           type: string
           description: For superusers only.
-    funder:
-      properties:
-        organization:
-          type: string
-        identifier:
-          type: string
-          description: The organization identifier, for example a ROR ID.
-          example: https://ror.org/00x6h5n95
-        identifierType:
-          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
-          type: string
-          example: ror
-        awardNumber:
-          type: string
-        awardDescription:
-          description: Usually used for the program or the division of the award.
-          type: string
-        order:
-          type: integer
-    dataset_links:
+    version_links:
       properties:
         _links:
           allOf:
           - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_dataset_links'
-    embedded_datasets:
+          - $ref: '#/components/schemas/hal_version_links'
+    Error:
       type: object
       properties:
-        _embedded:
-          type: object
-          properties:
-            stash:datasets:
-              type: array
-              items:
-                $ref: '#/components/schemas/dataset'
-    hal_page_links:
-      properties:
-        first:
-          $ref: '#/components/schemas/hal_link'
-        last:
-          $ref: '#/components/schemas/hal_link'
-        prev:
-          $ref: '#/components/schemas/hal_link'
-        next:
-          $ref: '#/components/schemas/hal_link'
-    hal_version_links:
-      properties:
-        stash:dataset:
-          $ref: '#/components/schemas/hal_link'
-        stash:files:
-          $ref: '#/components/schemas/hal_link'
-        stash:download:
-          $ref: '#/components/schemas/hal_link'
-        curies:
-          type: array
-          items:
-            $ref: '#/components/schemas/hal_curie'
-    paging_counts:
-      properties:
-        count:
-          type: integer
-        total:
-          type: integer
-    geolocation:
-      properties:
-        place:
-          description: A place name.
+        error:
           type: string
-        box:
-          $ref: '#/components/schemas/geolocationBox'
-          description: A bounding box.
-        point:
-          $ref: '#/components/schemas/geolocationPoint'
-          description: A coordinate point.
     embedded_versions:
       type: object
       properties:
@@ -425,12 +408,46 @@ components:
           visibility:
             type: string
             description: Whether or not this version is publicly visible.
-    version_links:
+    hal_self_link:
+      type: object
       properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_version_links'
+        self:
+          $ref: '#/components/schemas/hal_link'
+    geolocationPoint:
+      type: object
+      properties:
+        latitude:
+          description: The latitude of the point.
+          type: number
+        longitude:
+          description: The longitude of the point.
+          type: number
+    datasets:
+      allOf:
+      - $ref: '#/components/schemas/hal_paged_response'
+      - $ref: '#/components/schemas/embedded_datasets'
+    versions:
+      allOf:
+      - $ref: '#/components/schemas/hal_paged_response'
+      - $ref: '#/components/schemas/embedded_versions'
+    embedded_datasets:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            stash:datasets:
+              type: array
+              items:
+                $ref: '#/components/schemas/dataset'
+    hal_paged_response:
+      allOf:
+      - properties:
+          _links:
+            allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_page_links'
+      - $ref: '#/components/schemas/paging_counts'
     geolocationBox:
       properties:
         swLongitude:
@@ -445,23 +462,156 @@ components:
         neLatitude:
           description: The latitude of the northeast corner of the box.
           type: number
-    Error:
-      type: object
+    dataset_submission:
       properties:
-        error:
+        op:
           type: string
-    hal_link:
-      type: object
-      properties:
-        href:
+          enum:
+          - replace
+          example: replace
+        path:
           type: string
-          format: uri
-      required:
-      - href
-    versions:
+          enum:
+          - /versionStatus
+          - /curationStatus
+          - publicationISSN
+          example: /versionStatus
+        value:
+          type: string
+          oneOf:
+          - title: /versionStatus
+            enum:
+            - in_progress
+            - processing
+            - submitted
+          - title: /curationStatus
+            enum:
+            - queued
+            - submitted
+            - peer_review
+            - curation
+            - action_required
+            - withdrawn
+          - title: /publicationISSN
+          example: queued
+    dataset:
       allOf:
-      - $ref: '#/components/schemas/hal_paged_response'
-      - $ref: '#/components/schemas/embedded_versions'
+      - properties:
+          identifier:
+            type: string
+          id:
+            type: integer
+          storageSize:
+            type: integer
+          relatedPublicationISSN:
+            type: string
+      - $ref: '#/components/schemas/version'
+      - $ref: '#/components/schemas/dataset_links'
+      - properties:
+          metrics:
+            type: object
+            properties:
+              views:
+                type: integer
+              downloads:
+                type: integer
+              citations:
+                type: integer
+          license:
+            type: string
+            description: The license of the dataset
+    hal_page_links:
+      properties:
+        first:
+          $ref: '#/components/schemas/hal_link'
+        last:
+          $ref: '#/components/schemas/hal_link'
+        prev:
+          $ref: '#/components/schemas/hal_link'
+        next:
+          $ref: '#/components/schemas/hal_link'
+    dataset_links:
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_dataset_links'
+    paging_counts:
+      properties:
+        count:
+          type: integer
+        total:
+          type: integer
+    relatedWork:
+      properties:
+        relationship:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+        identifierType:
+          type: string
+        identifier:
+          type: string
+    author:
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        affiliation:
+          type: string
+        affiliationROR:
+          type: string
+          description: Preferred identifier for the author affiliation.
+        affiliations:
+          type: array
+          items:
+            name: string
+            ror_id: string
+        affiliationISNI:
+          type: string
+        orcid:
+          type: string
+        order:
+          type: integer
+    funder:
+      properties:
+        organization:
+          type: string
+        identifier:
+          type: string
+          description: The organization identifier, for example a ROR ID.
+          example: https://ror.org/00x6h5n95
+        identifierType:
+          description: Type of identifier — ror, isni, grid, crossref_funder_id or other.
+          type: string
+          example: ror
+        awardNumber:
+          type: string
+        awardDescription:
+          description: Usually used for the program or the division of the award.
+          type: string
+        order:
+          type: integer
+    geolocation:
+      properties:
+        place:
+          description: A place name.
+          type: string
+        box:
+          $ref: '#/components/schemas/geolocationBox'
+          description: A bounding box.
+        point:
+          $ref: '#/components/schemas/geolocationPoint'
+          description: A coordinate point.
     dc_metadata:
       type: object
       properties:
@@ -506,157 +656,58 @@ components:
       - title
       - authors
       - abstract
-    dataset:
-      allOf:
-      - properties:
-          identifier:
-            type: string
-          id:
-            type: integer
-          storageSize:
-            type: integer
-          relatedPublicationISSN:
-            type: string
-      - $ref: '#/components/schemas/version'
-      - $ref: '#/components/schemas/dataset_links'
-      - properties:
-          metrics:
-            type: object
-            properties:
-              views:
-                type: integer
-              downloads:
-                type: integer
-              citations:
-                type: integer
-          license:
-            type: string
-            description: The license of the dataset
-    hal_paged_response:
-      allOf:
-      - properties:
-          _links:
-            allOf:
-            - $ref: '#/components/schemas/hal_self_link'
-            - $ref: '#/components/schemas/hal_page_links'
-      - $ref: '#/components/schemas/paging_counts'
-    geolocationPoint:
-      type: object
-      properties:
-        latitude:
-          description: The latitude of the point.
-          type: number
-        longitude:
-          description: The longitude of the point.
-          type: number
-    hal_dataset_links:
-      properties:
-        stash:versions:
-          $ref: '#/components/schemas/hal_link'
-        stash:version:
-          $ref: '#/components/schemas/hal_link'
-        stash:download:
-          $ref: '#/components/schemas/hal_link'
-        curies:
-          type: array
-          items:
-            $ref: '#/components/schemas/hal_curie'
-    hal_curie:
-      type: object
-      properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
-    author:
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        affiliation:
-          type: string
-        affiliationROR:
-          type: string
-          description: Preferred identifier for the author affiliation.
-        affiliations:
-          type: array
-          items:
-            name: string
-            ror_id: string
-        affiliationISNI:
-          type: string
-        orcid:
-          type: string
-        order:
-          type: integer
-    relatedWork:
-      properties:
-        relationship:
-          format: string
-          enum:
-          - article
-          - dataset
-          - preprint
-          - software
-          - supplemental_information
-          - primary_article
-          - data_management_plan
-        identifierType:
-          type: string
-        identifier:
-          type: string
-    datasets:
-      allOf:
-      - $ref: '#/components/schemas/hal_paged_response'
-      - $ref: '#/components/schemas/embedded_datasets'
-    dataset_submission:
-      properties:
-        op:
-          type: string
-          enum:
-          - replace
-          example: replace
-        path:
-          type: string
-          enum:
-          - /versionStatus
-          - /curationStatus
-          - publicationISSN
-          example: /versionStatus
-        value:
-          type: string
-          oneOf:
-          - title: /versionStatus
-            enum:
-            - in_progress
-            - processing
-            - submitted
-          - title: /curationStatus
-            enum:
-            - queued
-            - submitted
-            - peer_review
-            - curation
-            - action_required
-            - withdrawn
-          - title: /publicationISSN
-          example: queued
-    hal_self_link:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/hal_link'
+  parameters:
+    publicationName:
+      in: query
+      name: publicationName
+      schema:
+        type: string
+      description: ISSN of a journal associated with the datasets.
+    page:
+      in: query
+      name: page
+      schema:
+        type: integer
+      description: Which page of results to view. Defaults to page 1.
+    per_page:
+      in: query
+      name: per_page
+      schema:
+        type: integer
+      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
+    curationStatus:
+      in: query
+      name: curationStatus
+      schema:
+        type: string
+      description: Curation Status
+    publicationISSN:
+      in: query
+      name: publicationISSN
+      schema:
+        type: string
+      description: ISSN of a journal associated with the datasets.
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
+    manuscriptNumber:
+      in: query
+      name: manuscriptNumber
+      schema:
+        type: string
+      description: Manuscript number associated with the dataset.
   responses:
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Unauthorized, must have current bearer token.
     NotFound:
       content:
         application/json:
@@ -671,20 +722,6 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: 400 - Bad Request
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Unauthorized, must have current bearer token.
-    Unacceptable:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
     UnprocessableEntity:
       content:
         application/json:
@@ -695,50 +732,13 @@ components:
 
 
               Example: _A dataset with same information already exists._'
-  parameters:
-    page:
-      in: query
-      name: page
-      schema:
-        type: integer
-      description: Which page of results to view. Defaults to page 1.
-    publicationISSN:
-      in: query
-      name: publicationISSN
-      schema:
-        type: string
-      description: ISSN of a journal associated with the datasets.
-    publicationName:
-      in: query
-      name: publicationName
-      schema:
-        type: string
-      description: ISSN of a journal associated with the datasets.
-    per_page:
-      in: query
-      name: per_page
-      schema:
-        type: integer
-      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
-    manuscriptNumber:
-      in: query
-      name: manuscriptNumber
-      schema:
-        type: string
-      description: Manuscript number associated with the dataset.
-    curationStatus:
-      in: query
-      name: curationStatus
-      schema:
-        type: string
-      description: Curation Status
-    doi:
-      in: path
-      name: doi
-      schema:
-        type: string
-      required: true
-      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
+    Unacceptable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
   securitySchemes:
     bearerAuth:
       type: http

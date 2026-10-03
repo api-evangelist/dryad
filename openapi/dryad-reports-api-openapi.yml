@@ -73,21 +73,6 @@ components:
       properties:
         error:
           type: string
-    reports:
-      properties:
-        _links:
-          type: object
-          properties:
-            self:
-              $ref: '#/components/schemas/hal_link'
-            reports:
-              type: array
-              items:
-                $ref: '#/components/schemas/hal_link'
-            curies:
-              type: array
-              items:
-                $ref: '#/components/schemas/hal_curie'
     hal_curie:
       type: object
       properties:
@@ -110,6 +95,21 @@ components:
           format: uri
       required:
       - href
+    reports:
+      properties:
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/hal_link'
+            reports:
+              type: array
+              items:
+                $ref: '#/components/schemas/hal_link'
+            curies:
+              type: array
+              items:
+                $ref: '#/components/schemas/hal_curie'
   responses:
     Unacceptable:
       content:
