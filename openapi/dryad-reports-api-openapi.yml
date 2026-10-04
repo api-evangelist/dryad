@@ -73,20 +73,6 @@ components:
       properties:
         error:
           type: string
-    hal_curie:
-      type: object
-      properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
     hal_link:
       type: object
       properties:
@@ -110,6 +96,20 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/hal_curie'
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
   responses:
     Unacceptable:
       content:

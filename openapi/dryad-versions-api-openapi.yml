@@ -103,223 +103,23 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    embedded_files:
-      type: object
+    geolocation:
       properties:
-        _embedded:
-          type: object
-          properties:
-            stash:files:
-              type: array
-              items:
-                $ref: '#/components/schemas/file'
-    hal_curie:
-      type: object
-      properties:
-        name:
+        place:
+          description: A place name.
           type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
-    hal_link:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-      required:
-      - href
-    version_links:
-      properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_version_links'
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-    version:
-      allOf:
-      - $ref: '#/components/schemas/version_links'
-      - $ref: '#/components/schemas/dc_metadata'
-      - properties:
-          versionNumber:
-            type: integer
-          versionStatus:
-            type: string
-            enum:
-            - in_progress
-            - processing
-            - submitted
-            description: Internal processing status of files.
-          curationStatus:
-            type: string
-            enum:
-            - In progress
-            - Processing
-            - Queued for curation
-            - Private for Peer Review
-            - Awaiting payment
-            - Curation
-            - Action required
-            - Withdrawn
-            - Embargoed
-            - Published
-            description: Status of the submission in the curation workflow.
-          versionChanges:
-            type: string
-            enum:
-            - files_changed
-            - metadata_changed
-          publicationDate:
-            type: string
-          lastModificationDate:
-            type: string
-          visibility:
-            type: string
-            description: Whether or not this version is publicly visible.
-    hal_self_link:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/hal_link'
-    geolocationPoint:
-      type: object
-      properties:
-        latitude:
-          description: The latitude of the point.
-          type: number
-        longitude:
-          description: The longitude of the point.
-          type: number
-    hal_paged_response:
-      allOf:
-      - properties:
-          _links:
-            allOf:
-            - $ref: '#/components/schemas/hal_self_link'
-            - $ref: '#/components/schemas/hal_page_links'
-      - $ref: '#/components/schemas/paging_counts'
-    geolocationBox:
-      properties:
-        swLongitude:
-          description: The longitude of the southwest corner of the box.
-          type: number
-        swLatitude:
-          description: The latitude of the southwest corner of the box.
-          type: number
-        neLongitude:
-          description: The longitude of the northeast corner of the box.
-          type: number
-        neLatitude:
-          description: The latitude of the northeast corner of the box.
-          type: number
-    file:
-      allOf:
-      - $ref: '#/components/schemas/file_links'
-      - properties:
-          path:
-            type: string
-          size:
-            type: integer
-          mimeType:
-            type: string
-          status:
-            type: string
-          digest:
-            type: string
-          digestType:
-            type: string
-          description:
-            type: string
-    file_links:
-      properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_file_links'
-    hal_file_links:
-      properties:
-        stash:dataset:
-          $ref: '#/components/schemas/hal_link'
-        stash:version:
-          $ref: '#/components/schemas/hal_link'
-        stash:files:
-          $ref: '#/components/schemas/hal_link'
-        stash:download:
-          $ref: '#/components/schemas/hal_link'
-        curies:
-          type: array
-          items:
-            $ref: '#/components/schemas/hal_curie'
-    hal_page_links:
-      properties:
-        first:
-          $ref: '#/components/schemas/hal_link'
-        last:
-          $ref: '#/components/schemas/hal_link'
-        prev:
-          $ref: '#/components/schemas/hal_link'
-        next:
-          $ref: '#/components/schemas/hal_link'
+        box:
+          $ref: '#/components/schemas/geolocationBox'
+          description: A bounding box.
+        point:
+          $ref: '#/components/schemas/geolocationPoint'
+          description: A coordinate point.
     paging_counts:
       properties:
         count:
           type: integer
         total:
           type: integer
-    relatedWork:
-      properties:
-        relationship:
-          format: string
-          enum:
-          - article
-          - dataset
-          - preprint
-          - software
-          - supplemental_information
-          - primary_article
-          - data_management_plan
-        identifierType:
-          type: string
-        identifier:
-          type: string
-    author:
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        affiliation:
-          type: string
-        affiliationROR:
-          type: string
-          description: Preferred identifier for the author affiliation.
-        affiliations:
-          type: array
-          items:
-            name: string
-            ror_id: string
-        affiliationISNI:
-          type: string
-        orcid:
-          type: string
-        order:
-          type: integer
-    files:
-      allOf:
-      - $ref: '#/components/schemas/hal_paged_response'
-      - $ref: '#/components/schemas/embedded_files'
     funder:
       properties:
         organization:
@@ -339,17 +139,6 @@ components:
           type: string
         order:
           type: integer
-    geolocation:
-      properties:
-        place:
-          description: A place name.
-          type: string
-        box:
-          $ref: '#/components/schemas/geolocationBox'
-          description: A bounding box.
-        point:
-          $ref: '#/components/schemas/geolocationPoint'
-          description: A coordinate point.
     dc_metadata:
       type: object
       properties:
@@ -394,6 +183,217 @@ components:
       - title
       - authors
       - abstract
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    author:
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        affiliation:
+          type: string
+        affiliationROR:
+          type: string
+          description: Preferred identifier for the author affiliation.
+        affiliations:
+          type: array
+          items:
+            name: string
+            ror_id: string
+        affiliationISNI:
+          type: string
+        orcid:
+          type: string
+        order:
+          type: integer
+    hal_self_link:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
+    relatedWork:
+      properties:
+        relationship:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+        identifierType:
+          type: string
+        identifier:
+          type: string
+    hal_file_links:
+      properties:
+        stash:dataset:
+          $ref: '#/components/schemas/hal_link'
+        stash:version:
+          $ref: '#/components/schemas/hal_link'
+        stash:files:
+          $ref: '#/components/schemas/hal_link'
+        stash:download:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
+    files:
+      allOf:
+      - $ref: '#/components/schemas/hal_paged_response'
+      - $ref: '#/components/schemas/embedded_files'
+    geolocationPoint:
+      type: object
+      properties:
+        latitude:
+          description: The latitude of the point.
+          type: number
+        longitude:
+          description: The longitude of the point.
+          type: number
+    version_links:
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_version_links'
+    hal_paged_response:
+      allOf:
+      - properties:
+          _links:
+            allOf:
+            - $ref: '#/components/schemas/hal_self_link'
+            - $ref: '#/components/schemas/hal_page_links'
+      - $ref: '#/components/schemas/paging_counts'
+    version:
+      allOf:
+      - $ref: '#/components/schemas/version_links'
+      - $ref: '#/components/schemas/dc_metadata'
+      - properties:
+          versionNumber:
+            type: integer
+          versionStatus:
+            type: string
+            enum:
+            - in_progress
+            - processing
+            - submitted
+            description: Internal processing status of files.
+          curationStatus:
+            type: string
+            enum:
+            - In progress
+            - Processing
+            - Queued for curation
+            - Private for Peer Review
+            - Awaiting payment
+            - Curation
+            - Action required
+            - Withdrawn
+            - Embargoed
+            - Published
+            description: Status of the submission in the curation workflow.
+          versionChanges:
+            type: string
+            enum:
+            - files_changed
+            - metadata_changed
+          publicationDate:
+            type: string
+          lastModificationDate:
+            type: string
+          visibility:
+            type: string
+            description: Whether or not this version is publicly visible.
+    embedded_files:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            stash:files:
+              type: array
+              items:
+                $ref: '#/components/schemas/file'
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
+    hal_page_links:
+      properties:
+        first:
+          $ref: '#/components/schemas/hal_link'
+        last:
+          $ref: '#/components/schemas/hal_link'
+        prev:
+          $ref: '#/components/schemas/hal_link'
+        next:
+          $ref: '#/components/schemas/hal_link'
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
+    file_links:
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_file_links'
+    file:
+      allOf:
+      - $ref: '#/components/schemas/file_links'
+      - properties:
+          path:
+            type: string
+          size:
+            type: integer
+          mimeType:
+            type: string
+          status:
+            type: string
+          digest:
+            type: string
+          digestType:
+            type: string
+          description:
+            type: string
+    geolocationBox:
+      properties:
+        swLongitude:
+          description: The longitude of the southwest corner of the box.
+          type: number
+        swLatitude:
+          description: The latitude of the southwest corner of the box.
+          type: number
+        neLongitude:
+          description: The longitude of the northeast corner of the box.
+          type: number
+        neLatitude:
+          description: The latitude of the northeast corner of the box.
+          type: number
     hal_version_links:
       properties:
         stash:dataset:
@@ -406,14 +406,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/hal_curie'
+  parameters:
+    version_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: The version ID is a unique integer and can be obtained from the list of versions for a dataset.
+    page:
+      in: query
+      name: page
+      schema:
+        type: integer
+      description: Which page of results to view. Defaults to page 1.
+    per_page:
+      in: query
+      name: per_page
+      schema:
+        type: integer
+      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
   responses:
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Unauthorized, must have current bearer token.
     NotFound:
       content:
         application/json:
@@ -428,26 +441,13 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
-  parameters:
-    page:
-      in: query
-      name: page
-      schema:
-        type: integer
-      description: Which page of results to view. Defaults to page 1.
-    version_id:
-      in: path
-      name: id
-      schema:
-        type: integer
-      required: true
-      description: The version ID is a unique integer and can be obtained from the list of versions for a dataset.
-    per_page:
-      in: query
-      name: per_page
-      schema:
-        type: integer
-      description: Number of results to return on each page. Defaults to 20. Maximum allowed is 100.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Unauthorized, must have current bearer token.
   securitySchemes:
     bearerAuth:
       type: http

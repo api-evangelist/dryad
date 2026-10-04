@@ -173,34 +173,13 @@ paths:
       operationId: postDatasetsByDoiUrls
       x-operation-id-source: derived
 components:
-  responses:
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Unauthorized, must have current bearer token.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Not Found
-    Unacceptable:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
   schemas:
-    Error:
-      type: object
+    file_links:
       properties:
-        error:
-          type: string
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_file_links'
     file:
       allOf:
       - $ref: '#/components/schemas/file_links'
@@ -219,26 +198,31 @@ components:
             type: string
           description:
             type: string
-    file_links:
+    Error:
+      type: object
       properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_file_links'
-    hal_file_links:
+        error:
+          type: string
+    hal_link:
+      type: object
       properties:
-        stash:dataset:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
+    hal_self_link:
+      type: object
+      properties:
+        self:
           $ref: '#/components/schemas/hal_link'
-        stash:version:
-          $ref: '#/components/schemas/hal_link'
-        stash:files:
-          $ref: '#/components/schemas/hal_link'
-        stash:download:
-          $ref: '#/components/schemas/hal_link'
-        curies:
-          type: array
-          items:
-            $ref: '#/components/schemas/hal_curie'
+    url_json:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
     hal_curie:
       type: object
       properties:
@@ -253,34 +237,21 @@ components:
       - name
       - href
       - templated
-    hal_self_link:
-      type: object
+    hal_file_links:
       properties:
-        self:
+        stash:dataset:
           $ref: '#/components/schemas/hal_link'
-    hal_link:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-      required:
-      - href
-    url_json:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url
+        stash:version:
+          $ref: '#/components/schemas/hal_link'
+        stash:files:
+          $ref: '#/components/schemas/hal_link'
+        stash:download:
+          $ref: '#/components/schemas/hal_link'
+        curies:
+          type: array
+          items:
+            $ref: '#/components/schemas/hal_curie'
   parameters:
-    doi:
-      in: path
-      name: doi
-      schema:
-        type: string
-      required: true
-      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
     filename:
       in: path
       name: id
@@ -288,6 +259,13 @@ components:
         type: string
       required: true
       description: The filename is the filename for the file. It should be escaped in the URL (for example 'cat tundra.jpg' would be 'cat%20tundra.jpg'.  Your programming language will have a library to encode for you.
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
     file_id:
       in: path
       name: id
@@ -295,6 +273,28 @@ components:
         type: integer
       required: true
       description: The file ID is a unique integer and can be obtained from the list of files for a version of a dataset.
+  responses:
+    Unacceptable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Unauthorized, must have current bearer token.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Not Found
   securitySchemes:
     bearerAuth:
       type: http
