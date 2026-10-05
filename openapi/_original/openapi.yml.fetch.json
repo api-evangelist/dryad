@@ -1,0 +1,12 @@
+{
+ "url": "https://datadryad.org/openapi.yml",
+ "requested_url": "https://datadryad.org/openapi.yml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 61093,
+ "sha256": "efaa9756c96724abbe7028aebbf6568e103dd8b99f1ec4aba586347b24d5b990",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.962), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
