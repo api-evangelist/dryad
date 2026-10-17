@@ -64,6 +64,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    hal_curie:
+      type: object
+      properties:
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
     Error:
       type: object
       properties:
@@ -92,20 +106,6 @@ components:
             $ref: '#/components/schemas/hal_curie'
       required:
       - self
-    hal_curie:
-      type: object
-      properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
   responses:
     Unacceptable:
       content:

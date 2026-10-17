@@ -174,12 +174,37 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    file_links:
+    hal_curie:
+      type: object
       properties:
-        _links:
-          allOf:
-          - $ref: '#/components/schemas/hal_self_link'
-          - $ref: '#/components/schemas/hal_file_links'
+        name:
+          type: string
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - name
+      - href
+      - templated
+    hal_self_link:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/hal_link'
+    url_json:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     file:
       allOf:
       - $ref: '#/components/schemas/file_links'
@@ -198,45 +223,6 @@ components:
             type: string
           description:
             type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-    hal_link:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-      required:
-      - href
-    hal_self_link:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/hal_link'
-    url_json:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url
-    hal_curie:
-      type: object
-      properties:
-        name:
-          type: string
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - name
-      - href
-      - templated
     hal_file_links:
       properties:
         stash:dataset:
@@ -251,28 +237,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/hal_curie'
-  parameters:
-    filename:
-      in: path
-      name: id
-      schema:
-        type: string
-      required: true
-      description: The filename is the filename for the file. It should be escaped in the URL (for example 'cat tundra.jpg' would be 'cat%20tundra.jpg'.  Your programming language will have a library to encode for you.
-    doi:
-      in: path
-      name: doi
-      schema:
-        type: string
-      required: true
-      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
-    file_id:
-      in: path
-      name: id
-      schema:
-        type: integer
-      required: true
-      description: The file ID is a unique integer and can be obtained from the list of files for a version of a dataset.
+    file_links:
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/hal_self_link'
+          - $ref: '#/components/schemas/hal_file_links'
+    hal_link:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+      required:
+      - href
   responses:
     Unacceptable:
       content:
@@ -295,6 +273,28 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: Not Found
+  parameters:
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
+    file_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: The file ID is a unique integer and can be obtained from the list of files for a version of a dataset.
+    filename:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: The filename is the filename for the file. It should be escaped in the URL (for example 'cat tundra.jpg' would be 'cat%20tundra.jpg'.  Your programming language will have a library to encode for you.
   securitySchemes:
     bearerAuth:
       type: http

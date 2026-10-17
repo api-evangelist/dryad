@@ -68,19 +68,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Error:
+    hal_curie:
       type: object
       properties:
-        error:
+        name:
           type: string
-    hal_link:
-      type: object
-      properties:
         href:
           type: string
           format: uri
+        templated:
+          type: boolean
       required:
+      - name
       - href
+      - templated
     reports:
       properties:
         _links:
@@ -96,20 +97,19 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/hal_curie'
-    hal_curie:
+    Error:
       type: object
       properties:
-        name:
+        error:
           type: string
+    hal_link:
+      type: object
+      properties:
         href:
           type: string
           format: uri
-        templated:
-          type: boolean
       required:
-      - name
       - href
-      - templated
   responses:
     Unacceptable:
       content:

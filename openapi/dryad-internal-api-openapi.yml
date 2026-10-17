@@ -143,15 +143,67 @@ paths:
       operationId: putDatasetsByDoiRelatedWorksByRelatedDoi
       x-operation-id-source: derived
 components:
+  parameters:
+    version_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: The version ID is a unique integer and can be obtained from the list of versions for a dataset.
+    doi:
+      in: path
+      name: doi
+      schema:
+        type: string
+      required: true
+      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
+    processor_result_id:
+      in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: The processor results ID for a single item.
   schemas:
-    processor_results:
-      type: array
-      items:
-        $ref: '#/components/schemas/processor_result'
     Error:
       type: object
       properties:
         error:
+          type: string
+    processor_results:
+      type: array
+      items:
+        $ref: '#/components/schemas/processor_result'
+    related_type:
+      type: object
+      properties:
+        work_type:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+          example: article
+    relatedWork:
+      properties:
+        relationship:
+          format: string
+          enum:
+          - article
+          - dataset
+          - preprint
+          - software
+          - supplemental_information
+          - primary_article
+          - data_management_plan
+        identifierType:
+          type: string
+        identifier:
           type: string
     processor_result:
       allOf:
@@ -192,58 +244,6 @@ components:
           updated_at:
             type: string
             format: date-time
-    relatedWork:
-      properties:
-        relationship:
-          format: string
-          enum:
-          - article
-          - dataset
-          - preprint
-          - software
-          - supplemental_information
-          - primary_article
-          - data_management_plan
-        identifierType:
-          type: string
-        identifier:
-          type: string
-    related_type:
-      type: object
-      properties:
-        work_type:
-          format: string
-          enum:
-          - article
-          - dataset
-          - preprint
-          - software
-          - supplemental_information
-          - primary_article
-          - data_management_plan
-          example: article
-  parameters:
-    doi:
-      in: path
-      name: doi
-      schema:
-        type: string
-      required: true
-      description: 'DOI like doi:10.1000/18238577 that should be URL encoded (example: <code>doi%3A10.1000%2F18238577</code>)'
-    processor_result_id:
-      in: path
-      name: id
-      schema:
-        type: integer
-      required: true
-      description: The processor results ID for a single item.
-    version_id:
-      in: path
-      name: id
-      schema:
-        type: integer
-      required: true
-      description: The version ID is a unique integer and can be obtained from the list of versions for a dataset.
   responses:
     Unacceptable:
       content:
@@ -252,13 +252,6 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: '406 - unacceptable: please set your `Content-Type` or `Accept` headers for application/json. `Accept` header is optional if you are using `Content-Type: application/json`.'
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Not Found
     unauthorized:
       content:
         application/json:
@@ -266,6 +259,13 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: unauthorized
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Not Found
   securitySchemes:
     bearerAuth:
       type: http
