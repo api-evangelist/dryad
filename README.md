@@ -64,39 +64,187 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Dryad is a nonprofit open data publishing platform and repository that enables researchers to publish, preserve, and access research datasets associated with peer-reviewed publications. It serves biology, ecology, and related disciplines, assigning citable DOIs to datasets and providing long-term preservation with curation support.
+Dryad is a nonprofit open data publishing platform and repository that enables researchers to publish, preserve, and access research datasets. It provides a REST API for submitting, updating, and retrieving datasets associated with peer-reviewed publications in biology, ecology, and related disciplines.
 
-## API
+**Areas:** Research Data · Open Science · Research Repository · Datasets · Biology · Ecology · Open Access
 
-The Dryad REST API v2 (current version 2.1.0) supports:
+## Dryad on APIs.io
 
-- **Search API** — Anonymous dataset discovery by keyword, affiliation (ROR), journal ISSN, modification date, and related work identifiers
-- **Dataset API** — Retrieve dataset metadata, versions, and file listings
-- **Submission API** — Create, update, and submit datasets with file uploads (direct binary or URL reference)
-- **Reporting API** — Access automatically generated repository reports
+Everything profiled for Dryad is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dryad/](https://apis.io/providers/dryad/)** — or go straight to one of the APIs or properties below.
 
-Base URL: `https://datadryad.org/api/v2`
+### APIs (7)
 
-Documentation: https://datadryad.org/api/v2/docs
+- [Dryad Datasets API](https://apis.io/apis/dryad/dryad-datasets-api/) — Dataset operations
+- [Dryad Files API](https://apis.io/apis/dryad/dryad-files-api/) — Operations on individual files of a dataset
+- [Dryad Internal API](https://apis.io/apis/dryad/dryad-internal-api/) — Internal APIs not of general interest to the public
+- [Dryad Reports API](https://apis.io/apis/dryad/dryad-reports-api/) — Reports on content in Dryad
+- [Dryad Root API](https://apis.io/apis/dryad/dryad-root-api/) — Root-level API calls
+- [Dryad Search API](https://apis.io/apis/dryad/dryad-search-api/) — Searching datasets
+- [Dryad Versions API](https://apis.io/apis/dryad/dryad-versions-api/) — Operations on individual versions of a dataset
 
-## Authentication
+### Published properties
 
-The API uses OAuth2 client credentials grant. Tokens are obtained via:
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-```
-POST https://datadryad.org/oauth/token
-```
+#### Agentic access (1)
 
-Tokens are valid for 10 hours. Anonymous access is available for public dataset search and retrieval.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Pricing
+- [Dryad Agentic Access](https://apis.io/agentic-access/dryad/dryad-agentic-access/)
 
-Data Publishing Charges (DPC) apply to dataset submission, starting at $150 for datasets up to 5 GB. Institutional and publisher partners can sponsor submissions for affiliated authors. Full pricing: https://datadryad.org/help/requirements/costs
+#### JSON Schema (44)
 
-## Links
+The data models the API reads and writes.
 
-- Website: https://datadryad.org
-- API Documentation: https://datadryad.org/api/v2/docs
-- GitHub: https://github.com/datadryad
-- Blog: https://blog.datadryad.org
-- Contact: help@datadryad.org
+- [Error](https://apis.io/schemas/dryad/Error/)
+- [Admin Values](https://apis.io/schemas/dryad/admin_values/)
+- [Author](https://apis.io/schemas/dryad/author/)
+- [Dataset](https://apis.io/schemas/dryad/dataset/)
+- [Dataset Links](https://apis.io/schemas/dryad/dataset_links/)
+- [Dataset Submission](https://apis.io/schemas/dryad/dataset_submission/)
+- [Datasets](https://apis.io/schemas/dryad/datasets/)
+- [Dc Metadata](https://apis.io/schemas/dryad/dc_metadata/)
+- [Embargo](https://apis.io/schemas/dryad/embargo/)
+- [Embedded Datasets](https://apis.io/schemas/dryad/embedded_datasets/)
+- [Embedded Files](https://apis.io/schemas/dryad/embedded_files/)
+- [Embedded Versions](https://apis.io/schemas/dryad/embedded_versions/)
+- [File](https://apis.io/schemas/dryad/file/)
+- [File Links](https://apis.io/schemas/dryad/file_links/)
+- [Files](https://apis.io/schemas/dryad/files/)
+- [Funder](https://apis.io/schemas/dryad/funder/)
+- [Geolocation](https://apis.io/schemas/dryad/geolocation/)
+- [Geolocationbox](https://apis.io/schemas/dryad/geolocationBox/)
+- [Geolocationpoint](https://apis.io/schemas/dryad/geolocationPoint/)
+- [Hal Curie](https://apis.io/schemas/dryad/hal_curie/)
+- [Hal Dataset Links](https://apis.io/schemas/dryad/hal_dataset_links/)
+- [Hal File Links](https://apis.io/schemas/dryad/hal_file_links/)
+- [Hal Link](https://apis.io/schemas/dryad/hal_link/)
+- [Hal Links](https://apis.io/schemas/dryad/hal_links/)
+- [Hal Page Links](https://apis.io/schemas/dryad/hal_page_links/)
+- …and 19 more published on APIs.io
+
+#### JSON-LD (2)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Api Context](https://apis.io/jsonld/dryad/api/)
+- [context Context](https://apis.io/jsonld/dryad/context/)
+
+#### Examples (6)
+
+Example requests and responses.
+
+- [Delete Files Id Response 403](https://apis.io/examples/dryad/delete-files-id-response-403/)
+- [Get Reports Name Response 404](https://apis.io/examples/dryad/get-reports-name-response-404/)
+- [Get Reports Name Response 500](https://apis.io/examples/dryad/get-reports-name-response-500/)
+- [Get Search Response 400](https://apis.io/examples/dryad/get-search-response-400/)
+- [Get Versions Id Download Response 404](https://apis.io/examples/dryad/get-versions-id-download-response-404/)
+- [Patch Datasets Doi Response 403](https://apis.io/examples/dryad/patch-datasets-doi-response-403/)
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [Dryad datasets API](https://apis.io/collections/dryad/open-dryad-datasets-api/)
+- [Dryad datasets files API](https://apis.io/collections/dryad/open-dryad-files-api/)
+- [Dryad datasets internal API](https://apis.io/collections/dryad/open-dryad-internal-api/)
+- [Dryad datasets reports API](https://apis.io/collections/dryad/open-dryad-reports-api/)
+- [Dryad datasets root API](https://apis.io/collections/dryad/open-dryad-root-api/)
+- [Dryad datasets search API](https://apis.io/collections/dryad/open-dryad-search-api/)
+- [Dryad datasets versions API](https://apis.io/collections/dryad/open-dryad-versions-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Dryad — jsonschema rules](https://apis.io/rules/dryad/dryad-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Dryad Authentication](https://apis.io/security/dryad/dryad-authentication/)
+- [Dryad Domain Security](https://apis.io/security/dryad/dryad-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plans](https://apis.io/plans/dryad/plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rate Limits](https://apis.io/rate-limits/dryad/rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/dryad/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.datadryad.org/)
+- [Pricing](https://datadryad.org/help/requirements/costs)
+- [Blog](https://blog.datadryad.org)
+- [Terms of service](https://datadryad.org/terms)
+- [Privacy policy](https://datadryad.org/privacy)
+
+## API Evangelist rating
+
+**Kin Score 43.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 60.2 |
+| Contract governance | 23.5 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 52.6 |
+
+**Agent readiness 31.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/dryad/](https://apis.io/providers/dryad/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Dryad: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dryad/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
